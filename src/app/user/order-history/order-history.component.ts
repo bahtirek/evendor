@@ -32,6 +32,7 @@ export class OrderHistoryComponent implements OnInit {
   public itemList: any = [];
   public orderToUpdate = [];
   public updates;
+  public spinner = 'none';
   
   private token = new HttpParams().set('token', this.auth.token)
   
@@ -42,11 +43,11 @@ export class OrderHistoryComponent implements OnInit {
     this.http.get(this.url.lastorders, {params: this.token})
       .subscribe(
         result=>{
-          console.log(result);
+          //console.log(result);
           this.history = result;
           if(this.history[0]){
             this.updatableOrder = this.history[0]['id'];
-            console.log(this.updatableOrder)
+            //console.log(this.updatableOrder)
           }
           
         },
@@ -69,12 +70,11 @@ export class OrderHistoryComponent implements OnInit {
     }else{
       this.showUpdateButton = false;
     }
-    //this.showUpdateTable = false;
     this.toggleView('');
     this.http.get<any>(this.url.order + '/' + id, {params: this.token})
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           this.order = result;
           for(let vendor of this.order){
             for(let item of vendor.items){
@@ -99,7 +99,7 @@ export class OrderHistoryComponent implements OnInit {
                 }
               }
             }
-            console.log(vendor)
+            //console.log(vendor)
           }
 
 
@@ -145,8 +145,6 @@ export class OrderHistoryComponent implements OnInit {
 
   updateOrder(){
     this.toggleView('updateTable');
-    //this.showUpdateTable = true;
-    //this.showOrder = false;
 
     this.http.get<any[]>(this.url.orderlistforupdate + '?token=' + this.auth.token)
       .subscribe(
@@ -171,7 +169,7 @@ export class OrderHistoryComponent implements OnInit {
                     if(itemIndex > -1){//elsi est v ordere item togda updatem quantity v litemslist
                       if(orderItem.updates.length > 0){// if item was updated
                         let upItem = orderItem.updates[orderItem.updates.length - 1];
-                        console.log(upItem)
+                       //console.log(upItem)
                         listVendor.items[itemIndex].quantity = upItem.quantity;
                         listVendor.items[itemIndex].pack = upItem.pack;
                       }else{
@@ -181,7 +179,7 @@ export class OrderHistoryComponent implements OnInit {
                     }else{//elsi net v ordere item togda pushaem item
                       if(orderItem.updates.length > 0){// if item was updated
                         let upItem = orderItem.updates[orderItem.updates.length - 1];
-                        console.log(upItem)
+                        //console.log(upItem)
                         orderItem.quantity = upItem.quantity;
                         orderItem.pack = upItem.pack;
                       }
@@ -195,23 +193,7 @@ export class OrderHistoryComponent implements OnInit {
                         }
                       }
                     }
-                    /* for(let listItem of listVendor.items){
-                      if(orderItem.id == listItem.id){
-                        if(orderItem.updates.length > 0){// if item was updated
-                          let upItem = orderItem.updates[orderItem.updates.length - 1];
-                          console.log(upItem)
-                          listItem.quantity = upItem.quantity;
-                          listItem.pack = upItem.pack;
-                        }else{
-                          listItem.quantity = orderItem.quantity;
-                          listItem.pack = orderItem.pack;
-                        }
-                        console.log(orderItem)
-                        
-                        //console.log(this.itemList)
-                        break;//stop itemList for after assingment
-                      }
-                    } */
+                   
                   }
                 }
               }
@@ -236,14 +218,14 @@ export class OrderHistoryComponent implements OnInit {
         vendorOut.note.push({note: vendorOut.vendorNote})
       }
       
-      console.log(this.vendors)
+     // console.log(this.vendors)
     }
     this.order = this.vendors;
     this.toggleView('order', 'review') 
     this.showUpdateButton = false;
-    console.log(this.itemList)
-    console.log(this.vendors)
-    console.log(this.orderToUpdate)
+    //console.log(this.itemList)
+    //console.log(this.vendors)
+    //console.log(this.orderToUpdate)
   }
 
   editUpdate(){
@@ -251,17 +233,15 @@ export class OrderHistoryComponent implements OnInit {
       vendorOut.items = [];
     }
     this.toggleView('updateTable');
-    console.log(this.itemList)
+    //console.log(this.itemList)
   }
 
   cancelUpdate(){
     this.toggleView('');
-    //this.showUpdateTable = false;
-
-  }
+   }
   
   changeVendor(data) {
-    console.log(data)
+    //console.log(data)
     let vendorId = data.vendorId;
     let vendorName = data.vendorName;
     let itemIndex = data.itemIndex;
@@ -273,12 +253,10 @@ export class OrderHistoryComponent implements OnInit {
     this.itemList[vendorIndex].items.push(this.itemList[prevVendorIndex].items[itemIndex]);
     this.itemList[prevVendorIndex].items.splice(itemIndex, 1);
     
-    
-    //this.itemList[itemIndex]['vendorId'] = vendorId;
-    //this.itemList[itemIndex]['vendorName'] = vendorName;
   }
 
   submitUpdate(){
+    this.spinner = 'block';
     let newOrder = [];
     let note = [];
     let i = 0;
@@ -288,10 +266,12 @@ export class OrderHistoryComponent implements OnInit {
           quantity: item.quantity,
           id: item.itemId,
           pack: item.pack,
-          vendor: item.vendorId
+          vendor: item.vendorId,
+          name: item.name,
+          note: ''
         });
       }
-      console.log(vendor)
+      //console.log(vendor)
       if(vendor.note && vendor.vendorNote){
         note.push({orderId: this.updatableOrder, note: vendor.vendorNote, vendorId: vendor.id});
       }
@@ -299,12 +279,13 @@ export class OrderHistoryComponent implements OnInit {
       i++;
 
       if(i == this.vendors.length){
-        console.log(newOrder)
+        //console.log(newOrder)
         this.http.put(this.url.orderupdate + '?token=' + this.auth.token , {order: newOrder, orderId: this.updatableOrder, note: note})
           .subscribe(
             result=>{
               console.log(result)
-              
+              this.spinner = 'none';
+              this.toggleView('order');
               },
             error=>{
               console.log(error)

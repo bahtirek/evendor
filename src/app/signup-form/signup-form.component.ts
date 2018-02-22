@@ -22,6 +22,8 @@ export class SignupFormComponent implements OnInit {
   public editCredentials;
   public spinner = 'none';
   public oldPassword = 'valid';
+  public show = {form: true, success: false,};
+  public linkId;
   
   public formErrors = {
     'name': [],
@@ -166,7 +168,7 @@ export class SignupFormComponent implements OnInit {
       );
 
     }else{
-      this.http.post(
+      this.http.post<any>(
         this.url.signup, 
         {name: userName, email: email, password: password},
         {headers: new HttpHeaders({'X-Requested-With': 'XMLHttpRequest'})}
@@ -174,15 +176,30 @@ export class SignupFormComponent implements OnInit {
       .subscribe(
         result=>{
           console.log(result)
+          this.linkId = result.message;
+          console.log()
           this.spinner = 'none';
-          this.router.navigate(['/home']);
+          this.toggleView('success');
+          //this.router.navigate(['/home']);
         },
         error=>{
-          console.log(error)
           this.spinner = 'none';
+          console.log(error.error.errors.email)
+          console.log(error.message)
+
+          if(error.error.errors.email){
+            this.formErrors.email = error.error.errors.email;
+          }
+          
         }
       );
     }
+  }
+
+  toggleView(view, view2?){
+    this.show = {form: false, success: false};
+    this.show[view] = true;
+    this.show[view2] = true;
   }
 
   cancel(){

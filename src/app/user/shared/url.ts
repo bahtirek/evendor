@@ -17,6 +17,7 @@ export const url = {
     items: <string> "http://evendors.host/api/items",
     useritems: <string> "http://evendors.host/api/useritems",
     useritem: <string> "http://evendors.host/api/useritem",
+    accountactivation: <string> "http://evendors.host/api/accountactivation",
     groups: <string> "http://evendors.host/api/groups",
     group: <string> "http://evendors.host/api/group",
     customitem: <string> "http://evendors.host/api/customitem",

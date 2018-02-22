@@ -36,7 +36,7 @@ export class TableComponent implements OnInit {
     let vendorName: string;
     let vendorIndex;
     let data;
-    console.log(vendorId, itemId, itemIndex, pack, quantity)
+    //console.log(vendorId, itemId, itemIndex, pack, quantity)
     for(let v = 0; v < this.vendors.length; v++){//getting vendorName
       if(this.vendors[v].id == vendorId){
         vendorName = this.vendors[v].name;
@@ -52,17 +52,17 @@ export class TableComponent implements OnInit {
     }else{
       if(quantity != 0){
         this.updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex);
-        console.log(vendorIndex)
+        //console.log(vendorIndex)
       }
       
 
       this.changeVendor.emit(data);
-      /* console.log(this.itemList[itemIndex].vendorId)
+      /* //console.log(this.itemList[itemIndex].vendorId)
       this.itemList[itemIndex].vendorId = vendorId;
       this.itemList[itemIndex].vendorName = vendorName; */
-      console.log(itemIndex)
-      console.log(this.itemList)
-      //console.log(this.itemList[itemIndex].vendorId)
+      //console.log(itemIndex)
+      //console.log(this.itemList)
+      ////console.log(this.itemList[itemIndex].vendorId)
       
     }
     
@@ -71,14 +71,14 @@ export class TableComponent implements OnInit {
  
 
   increase(itemInd){
-    console.log(itemInd)
+    //console.log(itemInd)
     this.itemList[itemInd]['quantity']++;
-    console.log(this.itemList[itemInd])
+    //console.log(this.itemList[itemInd])
     this.updateOrder(this.itemList[itemInd]['id'], this.itemList[itemInd]['pack'], this.itemList[itemInd]['vendorId'], this.itemList[itemInd]['quantity'], this.itemList[itemInd]['name'])
   }
 
   decrease(itemInd){
-    console.log(itemInd)
+    //console.log(itemInd)
     if(this.itemList[itemInd]['quantity'] > 0){
       this.itemList[itemInd]['quantity']--;
       this.updateOrder(this.itemList[itemInd]['id'], this.itemList[itemInd]['pack'], this.itemList[itemInd]['vendorId'], this.itemList[itemInd]['quantity'], this.itemList[itemInd]['name']);      
@@ -89,7 +89,7 @@ export class TableComponent implements OnInit {
 
 updateOrder(itemId, pack, vendorId, quantity, itemName?){ //updateOrder needed  only to keep order in storage 
   if(!this.onUpdate){ //updating new order
-    console.log(itemId, pack, vendorId, quantity)
+    //console.log(itemId, pack, vendorId, quantity)
     if(this.updateOrder) return false; //if updating order from history dont need to save order in cookie
     let i = 0;
     if(this.order.length > 0){
@@ -129,18 +129,18 @@ updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex?){
   if( index == -1){
     this.vendors[this.vendorIndex]['changesMap'].push(itemId);
     this.vendors[this.vendorIndex]['changes'].push({pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName});
-     console.log(this.vendors)
+     //console.log(this.vendors)
   }else{
     this.vendors[this.vendorIndex]['changes'][index] = {pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName};
   }
 
   if(vendorIndex >= 0){//on vendor change
-    console.log(vendorIndex)
+    //console.log(vendorIndex)
     let index = this.vendors[vendorIndex]['changesMap'].indexOf(itemId)
     if( index == -1){
       this.vendors[vendorIndex]['changesMap'].push(itemId);
       this.vendors[vendorIndex]['changes'].push({pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName});
-       console.log(this.vendors)
+       //console.log(this.vendors)
     }else{
       this.vendors[vendorIndex]['changes'][index] = {pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName};
     }
@@ -150,7 +150,7 @@ updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex?){
     if( index == -1){
       this.vendors[this.vendorIndex]['changesMap'].push(itemId);
       this.vendors[this.vendorIndex]['changes'].push({pack: pack, vendorId: prevVendorId, quantity: 0, itemId: itemId, name: itemName});
-       console.log(this.vendors)
+       //console.log(this.vendors)
     }else{
       this.vendors[this.vendorIndex]['changes'][index] = {pack: pack, vendorId: prevVendorId, quantity: 0, itemId: itemId, name: itemName};
     }

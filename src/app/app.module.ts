@@ -23,6 +23,7 @@ import { UserModule } from './user/user.module';
 //import { SpinnerComponent } from './spinner/spinner.component';
 //import { ModalComponent } from './modal/modal.component';
 import { TextMaskModule } from 'angular2-text-mask';
+import { AccountActivationComponent } from './account-activation/account-activation.component';
 //import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({
@@ -30,7 +31,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     AppComponent,
     HomeComponent,
     UserComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    AccountActivationComponent
   ],
   imports: [
     BrowserModule,

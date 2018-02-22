@@ -66,10 +66,10 @@ export class NewOrderComponent implements OnInit {
                   .subscribe(
                     result => { // itemList subscribe
                       this.itemList = result;
-                      console.log(this.itemList)
+                      //console.log(this.itemList)
                     },
                     error => {
-                      console.log(error)
+                      //console.log(error)
                     },
                     () => { //get exist unfinished order from cookie
                       this.getSuspendedOrder();
@@ -140,7 +140,7 @@ export class NewOrderComponent implements OnInit {
           result => {
             this.itemList = result;
             this.arrange(this.by);
-            console.log(result)
+            //console.log(result)
           },
           error => {},
           ()=>{
@@ -181,18 +181,18 @@ export class NewOrderComponent implements OnInit {
   }
 
   submit() {
-    //this.spinner = 'block';
+    this.spinner = 'block';
     let newOrder = [];
     let note = [];
-    console.log(this.vendors)
+    //console.log(this.vendors)
     for(let vendor of this.vendors){
       if(vendor.vendorNote){
         note.push({note: vendor.vendorNote, vendorId: vendor.id});
       }
-      console.log(note)
+      //console.log(note)
     }
     let i = 0;
-    console.log(this.itemList)
+    //console.log(this.itemList)
     for (let item of this.itemList) {
       if (item.quantity > 0) {
         newOrder.push({
@@ -224,7 +224,7 @@ export class NewOrderComponent implements OnInit {
               
             }
           );
-        //console.log(newOrder)
+        ////console.log(newOrder)
       }
     }
 
@@ -246,20 +246,20 @@ export class NewOrderComponent implements OnInit {
       }
       i++;
       if (i == this.itemList.length) {
-        console.log(newOrder)
+        //console.log(newOrder)
         this.http.post(this.url.suspend + '?token=' + this.auth.token, {order: newOrder})
           .subscribe(
             result => {
-              console.log(result)
+              //console.log(result)
               this.spinner = "none";
               localStorage.removeItem('order');
             },
             error => {
-              console.log(error)
+              //console.log(error)
               this.spinner = "none";
             }
           );
-        console.log(newOrder)
+        //console.log(newOrder)
       }
     }
 
@@ -269,11 +269,11 @@ export class NewOrderComponent implements OnInit {
     this.http.get<any>(this.url.suspend + '?token=' + this.auth.token)
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           if(result.length == 0){
             let orderfromCash = JSON.parse(localStorage.getItem('order'));
             if(orderfromCash && orderfromCash.token == this.auth.token){
-              console.log('orderfromCash')
+              //console.log('orderfromCash')
               this.suspendedOrder = orderfromCash.order;
               this.loadSuspendedOrder();
             }
@@ -283,10 +283,10 @@ export class NewOrderComponent implements OnInit {
             this.modal.suspendDisplay = 'block';
             this.suspendedOrder = result;
           }
-          console.log(result)
+          //console.log(result)
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       );
   }
@@ -321,11 +321,11 @@ export class NewOrderComponent implements OnInit {
     this.http.delete(this.url.suspend, {params: this.token})
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           this.modal.suspendDisplay = 'none';    
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       );
   }
@@ -335,42 +335,7 @@ setVendorNote(text, index){
   this.itemListBy[index]['vendorNote'] = text;
 }
 
-test(){
-  console.log(this.itemListBy)
-  console.log(this.itemList)
-  console.log(this.vendors)
-}
+
 
 
 }
-/*
-
-
-  getCashedOrder() {
-    //console.log('hello')
-    let orderFromCash = JSON.parse(localStorage.getItem('order'));//assign cookie to order object
-    if(orderFromCash != null) this.order = orderFromCash;
-    if(this.order){
-      for (let item of this.order) { //going thru object from cookie
-        for(let i = 0; i < this.vendors.length; i++){//for loop to assign vendor name
-          if(item.v == this.vendors[i]['id']){
-            item.n = this.vendors[i]['name'];
-          }
-          if(i == this.vendors.length - 1 || item.v == this.vendors[i]['id']){// if for loop(vendor name) is done or name found
-            for (let i = 0; i < this.itemList.length; i++) {// going trhu itemList
-              if (this.itemList[i]['id'] == item.i) {// if item id match assigning data from cookie object to itemList
-                this.itemList[i]['vendorId'] = item.v;
-                this.itemList[i]['vendorName'] = item.n;
-                this.itemList[i]['pack'] = item.p;
-                this.itemList[i]['quantity'] = item.q;
-                break;//stop itemList for after assingment
-              }
-            }
-          }
-        }
-      }
-    }  
-    console.log(this.order)
-  }
-
-*/

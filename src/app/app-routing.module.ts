@@ -1,3 +1,4 @@
+import { AccountActivationComponent } from './account-activation/account-activation.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -17,7 +18,11 @@ const routes: Routes = [
   {
     path: "signup",
     component: RegistrationComponent
- }
+  },
+  {
+    path: "accountactivation/:id",
+    component: AccountActivationComponent
+  }
 ];
 
 @NgModule({

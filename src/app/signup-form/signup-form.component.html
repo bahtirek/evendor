@@ -1,3 +1,4 @@
+<div *ngIf="show.form">
 <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
     <div class="form-group row">
       <label for="name" class="col-sm-3 col-form-label">User name</label>
@@ -76,9 +77,6 @@
 
 
     <p class="text-warning"> **All fields are required</p>
-    <!-- <button type="submit" class="btn btn-link mt-3" [disabled]="!signupForm.valid">Sign up</button>
-    <button *ngIf="!editCredentials" class="btn btn-link mt-3" (click)="cancel()">Cancel</button>
-    <button *ngIf="editCredentials" class="btn btn-link mt-3" (click)="cancelCredentialEditing()">Cancel</button> -->
     <div *ngIf="!editCredentials">
         <button type="submit" class="btn btn-link mt-3" [disabled]="!signupForm.valid">Sign up</button>
          <button  class="btn btn-link mt-3" (click)="cancel()">Cancel</button>
@@ -88,4 +86,10 @@
           <button class="btn btn-link mt-3" (click)="cancelCredentialEditing()">Cancel</button>
       </div>
   </form>
+</div>
+<div *ngIf="show.success">
+  <p>We have sent you an email with instructions. Please follow the instructions to comlete the registration.. 
+    <a class="nav-link" routerLink="../home">Home</a>
+  </p>
+</div>
   <spinner [spinner]="spinner"></spinner>
