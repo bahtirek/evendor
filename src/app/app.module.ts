@@ -24,6 +24,7 @@ import { UserModule } from './user/user.module';
 //import { ModalComponent } from './modal/modal.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { AccountActivationComponent } from './account-activation/account-activation.component';
+import { PriceCheckComponent } from './price-check/price-check.component';
 //import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({
@@ -32,7 +33,8 @@ import { AccountActivationComponent } from './account-activation/account-activat
     HomeComponent,
     UserComponent,
     RegistrationComponent,
-    AccountActivationComponent
+    AccountActivationComponent,
+    PriceCheckComponent
   ],
   imports: [
     BrowserModule,

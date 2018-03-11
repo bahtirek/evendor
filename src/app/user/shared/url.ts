@@ -31,5 +31,8 @@ export const url = {
     itemsnote: <string> "http://evendors.host/api/itemsnote",
     accounts: <string> "http://evendors.host/api/accounts",
     passvalidation: <string> "http://evendors.host/api/passvalidation",
-    loginedit: <string> "http://evendors.host/api/loginedit"
+    loginedit: <string> "http://evendors.host/api/loginedit",
+    compare: <string> "http://evendors.host/api/compare",
+    getprice: <string> "http://evendors.host/api/getprice",
+    sendprice: <string> "http://evendors.host/api/sendprice"
 }

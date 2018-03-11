@@ -1,0 +1,47 @@
+h4{
+    padding: 2rem 3rem 2rem 3rem;
+    color: #5288b5
+}
+
+ .card{
+    margin-bottom: 10px;
+}
+.card-header{
+    padding-top: .30rem;
+    padding-bottom: .30rem;
+    background-color: #FAFAFA;
+}
+
+.card-block{
+    padding-right: .30rem;
+    padding-left: .30rem;
+}
+
+table tr:last-child{
+    border-bottom: solid 1px rgb(192, 191, 191);
+}
+table{
+    table-layout: fixed;
+}
+
+.table td{
+    padding: .30rem;
+    border-top: solid 1px rgb(192, 191, 191);
+}
+
+p{
+    margin: 0 0 0 10px;
+}
+
+
+
+ 
+
+.order-buttons{
+     margin-top: 3rem;
+     margin-bottom: 2rem;
+ }
+
+ input[type="text"], select {
+    width: 5rem;
+}

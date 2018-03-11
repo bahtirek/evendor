@@ -178,6 +178,7 @@ export class NewOrderComponent implements OnInit {
 
   review() {
     this.isReview = !this.isReview;
+    console.log(this.itemList)
   }
 
   submit() {
@@ -335,7 +336,41 @@ setVendorNote(text, index){
   this.itemListBy[index]['vendorNote'] = text;
 }
 
+compare(){
+  
+  let i = 0;
+  let compare = [];
+  console.log(this.itemList)
+  for (let item of this.itemList) {
+    if (item.compare) {
+      compare.push({
+        id: item.id,
+        name: item.name
+      })
+    }
+    i++;
+    if (i == this.itemList.length) { //if it last loop of parent forloop(for (let item of this.itemList)) submit order
+      console.log(compare)
+      this.http.post(this.url.compare + '?token=' + this.auth.token, {compare: compare})
+        .subscribe(
+          result => {
+            console.log(result)
+            
+            this.spinner = "none";
+          },
+          error => {
+            console.log(error)
+            this.spinner = "none";
+          },
+        );
+    }
+  }
+}
 
+comparesuspend(){
+  this.suspend();
+  this.compare();
+}
 
 
 }

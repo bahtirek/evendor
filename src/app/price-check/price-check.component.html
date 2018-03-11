@@ -1,0 +1,52 @@
+<div class="main">
+  <nav class="navbar navbar-toggleable-xl navbar-light bg-faded">
+    <h3 class="navbar-brand">eVendors</h3>
+  </nav>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h4>Price check</h4>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="card">
+                <div class="card-block">
+                  <table class="table table-hover table-sm">
+                    <tbody>
+                      <tr *ngFor="let item of itemList; let itemInd=index">
+                        <td>
+                          <div class="row justify-content-center">
+                            <div class="col-sm-5">
+                              <p>{{item.name}}</p>
+                              <!-- <small class="text-warning">{{item.note}}</small> -->
+                            </div>
+                            <div class="col-sm-7 form-inline justify-content-center">
+                              <label class="mr-sm-2" for="price">$</label>
+                              <input type="text" name="price" class="form-control form-control-sm" (keypress)="getNumber($event)" [(ngModel)]="item.price" ngModel>
+                              <label class="mr-sm-2 ml-2 mr-2" for="pack"> per </label>
+                              <select class="form-control form-control-sm ml" name="item.pack" [(ngModel)]="item.pack" ngModel>
+                                <option *ngFor="let pack of packList" >{{pack.type}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="form-group order-buttons">
+                      <label for="note">Comments:</label>
+                      <textarea class="form-control" #textarea rows="4" (keyup)="setVendorNote(textarea.value)">{{vendorNote}}</textarea>
+                      
+                    </div>
+                  <h5 class="text-danger ml-3 pl-3" *ngIf="expMessage">{{expMessage}}</h5>
+                </div>
+              </div>
+              <div class="order-buttons text-left" *ngIf="!expMessage">
+                <button type="button" class="btn btn-link" (click)="submit()">Submit</button>
+                <button type="button" class="btn btn-link text-danger" (click)="clear()">Clear</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
