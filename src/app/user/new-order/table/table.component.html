@@ -32,7 +32,7 @@
                 <div class="col-xs-3">
                   <div class="form-check" *ngIf="!onUpdate">
                     <label class="form-check-label text-muted">
-                        <input class="form-check-input ml" name="comp" type="checkbox" value="" [(ngModel)]="item.compare" ngModel>
+                        <input class="form-check-input ml" name="comp" type="checkbox" value="" [(ngModel)]="item.compare" (change)="emitCheckCompare()" ngModel>
                         Compare
                         <!-- <div class="checkbox"></div> -->
                       </label>

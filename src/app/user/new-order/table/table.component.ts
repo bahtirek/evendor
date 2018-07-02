@@ -32,6 +32,18 @@ export class TableComponent implements OnInit {
 
   @Output()
   changeVendor: EventEmitter<object> = new EventEmitter();
+
+  @Output()
+  checkCompare: EventEmitter<any> = new EventEmitter();
+  
+  @Output()
+  checkQuantity: EventEmitter<any> = new EventEmitter();
+
+  emitCheckCompare(){
+    this.checkCompare.emit();
+  }
+
+
   change(vendorId, itemId, itemIndex, pack, quantity, itemName){
     let vendorName: string;
     let vendorIndex;
@@ -57,12 +69,6 @@ export class TableComponent implements OnInit {
       
 
       this.changeVendor.emit(data);
-      /* //console.log(this.itemList[itemIndex].vendorId)
-      this.itemList[itemIndex].vendorId = vendorId;
-      this.itemList[itemIndex].vendorName = vendorName; */
-      //console.log(itemIndex)
-      //console.log(this.itemList)
-      ////console.log(this.itemList[itemIndex].vendorId)
       
     }
     
@@ -89,9 +95,10 @@ export class TableComponent implements OnInit {
 
 updateOrder(itemId, pack, vendorId, quantity, itemName?){ //updateOrder needed  only to keep order in storage 
   if(!this.onUpdate){ //updating new order
+    
     //console.log(itemId, pack, vendorId, quantity)
-    if(this.updateOrder) return false; //if updating order from history dont need to save order in cookie
     let i = 0;
+    
     if(this.order.length > 0){
       for(let i = 0; i < this.order.length; i++){                   //going thru each item in order
         if(this.order[i].i == itemId){                              //if item exist then update
@@ -102,13 +109,13 @@ updateOrder(itemId, pack, vendorId, quantity, itemName?){ //updateOrder needed  
           }else{
             this.order.splice(i, 1);
           }
-          this.setCookie();                                       //set cookie after update
+          this.saveChangesInLocalStorage();                                       //set cookie after update
           break;
         }else{                                                    //if not exist and
           if(i+1 == this.order.length){                           // loop is done addinf new item into order
             let data: Order = new Order(itemId, vendorId, pack, quantity);
             this.order.push(data);
-            this.setCookie();                                    //set cookie after adding new item
+            this.saveChangesInLocalStorage();                                    //set cookie after adding new item
             break; 
           }
         }
@@ -116,8 +123,11 @@ updateOrder(itemId, pack, vendorId, quantity, itemName?){ //updateOrder needed  
     }else{                                                      //adding first item
       let data: Order = new Order(itemId, vendorId, pack, quantity);
       this.order.push(data);
-      this.setCookie();              //set cookie after adding new item
+      this.saveChangesInLocalStorage();              //set cookie after adding new item
     }
+
+    this.checkQuantity.emit();
+
   }else{//update old order from orders history  DOESNT KEEP IN CASH
     this.updateHistoryItem(itemId, pack, vendorId, quantity, itemName)
   }
@@ -135,12 +145,12 @@ updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex?){
   }
 
   if(vendorIndex >= 0){//on vendor change
-    //console.log(vendorIndex)
+    console.log(vendorIndex)
     let index = this.vendors[vendorIndex]['changesMap'].indexOf(itemId)
     if( index == -1){
       this.vendors[vendorIndex]['changesMap'].push(itemId);
       this.vendors[vendorIndex]['changes'].push({pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName});
-       //console.log(this.vendors)
+       console.log(this.vendors)
     }else{
       this.vendors[vendorIndex]['changes'][index] = {pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName};
     }
@@ -156,9 +166,11 @@ updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex?){
     }
   }
 }
-  setCookie(){
-    let orderCookie = JSON.stringify({order: this.order, token: this.auth.token});
-    localStorage.setItem('order', orderCookie);
+
+
+saveChangesInLocalStorage(){
+    let order = JSON.stringify({order: this.order, token: this.auth.token});
+    localStorage.setItem('order', order);
   }
 
 

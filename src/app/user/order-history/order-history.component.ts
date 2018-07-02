@@ -271,7 +271,7 @@ export class OrderHistoryComponent implements OnInit {
           note: ''
         });
       }
-      //console.log(vendor)
+      console.log(vendor)
       if(vendor.note && vendor.vendorNote){
         note.push({orderId: this.updatableOrder, note: vendor.vendorNote, vendorId: vendor.id});
       }
@@ -279,7 +279,7 @@ export class OrderHistoryComponent implements OnInit {
       i++;
 
       if(i == this.vendors.length){
-        //console.log(newOrder)
+        console.log(newOrder)
         this.http.put(this.url.orderupdate + '?token=' + this.auth.token , {order: newOrder, orderId: this.updatableOrder, note: note})
           .subscribe(
             result=>{

@@ -40,6 +40,8 @@ export class NewOrderComponent implements OnInit {
   public showOrder: boolean = false;
   public modal = modal;
   public suspendedOrder;
+  public showSubmitButton = false;
+  public showPriceButton = false;
   //public byWhat = 'byOrder';
   private token = new HttpParams().set('token', this.auth.token);
 
@@ -178,7 +180,13 @@ export class NewOrderComponent implements OnInit {
 
   review() {
     this.isReview = !this.isReview;
-    console.log(this.itemList)
+    if(this.isReview == false){
+      this.showSubmitButton = false;
+      this.showPriceButton = false;
+    }else{
+      this.compareCheck();
+      this.quantityCheck();
+    }
   }
 
   submit() {
@@ -367,9 +375,36 @@ compare(){
   }
 }
 
-comparesuspend(){
-  this.suspend();
-  this.compare();
+quantityCheck(){
+  for(let i in this.itemList){
+    if(this.itemList[i]['quantity'] > 0){ 
+      this.showSubmitButton = true; //clickable button when at least one item is ordered
+      break;
+    }
+  }
+}
+
+compareCheck(){
+  for(let i in this.itemList){
+    if(this.itemList[i]['compare'] && this.itemList[i]['compare'] == true){ //if compare attr is exist and compare is true then ShowPriceButton = true
+      this.showPriceButton = true; //clickable button when one of the compare chekboxes is checked
+      break;
+    }
+  }
+}
+
+checkCompareEmitFromTable(){
+  if(this.isReview){
+    this.showPriceButton = false;
+    this.compareCheck();
+  }
+}
+
+checkQuantityEmitFromTable(){
+  if(this.isReview){
+    this.showSubmitButton = false;
+    this.quantityCheck();
+  }
 }
 
 

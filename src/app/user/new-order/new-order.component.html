@@ -13,8 +13,8 @@
             <h5 class="link">By order</h5>
           </div>
           <div class="card-block">
-            <order-table [itemList]="itemList" [vendors]="vendors" [by]="by" [order]="order" [isReview]="isReview"
-              (changeVendor)="changeVendor($event)"></order-table>
+            <order-table [itemList]="itemList" [vendors]="vendors" [by]="by" [order]="order" [isReview]="isReview" 
+              (changeVendor)="changeVendor($event)" (checkCompare)="checkCompareEmitFromTable()" (checkQuantity)="checkQuantityEmitFromTable()"></order-table>
           </div>
         </div>
       </ng-container>
@@ -31,7 +31,7 @@
             <div id="{{'i'+itemlist.id+'i'}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
               <div class="card-block">
                 <order-table [itemList]="itemlist.items" [vendors]="vendors" [by]="by" [order]="order" [isReview]="isReview"
-                  (changeVendor)="changeVendor($event)">
+                  (changeVendor)="changeVendor($event)" (checkCompare)="checkCompareEmitFromTable()" (checkQuantity)="checkQuantityEmitFromTable()">
                 </order-table>
                   <div *ngIf="by=='byVendor'" class="form-group order-buttons">
                       <label for="note">Note for {{itemlist.name}}</label>
@@ -50,10 +50,10 @@
       </div>
       <div class="order-buttons text-left" *ngIf="isReview">
         <button type="button" class="btn btn-link" (click)="review()">Continue ordering</button>
-        <button type="button" class="btn btn-link" (click)="comparesuspend()" >Compare and Suspend</button>
-        <button type="button" class="btn btn-link" (click)="suspend()">Suspend</button>
-        <button type="button" class="btn btn-link" (click)="compare()" >Compare</button>
-        <button type="button" class="btn btn-link" (click)="submit()">Submit</button>
+        <button type="button" class="btn btn-link" (click)="comparesuspend()" [disabled]="!showPriceButton || !showSubmitButton">Price check and Suspend</button>
+        <button type="button" class="btn btn-link" (click)="suspend()" [disabled]="!showSubmitButton">Suspend</button>
+        <button type="button" class="btn btn-link" (click)="compare()" [disabled]="!showPriceButton">Price check</button>
+        <button type="button" class="btn btn-link" (click)="submit()" [disabled]="!showSubmitButton">Submit</button>
       </div>
     </div>
     <!-- show order component -->
