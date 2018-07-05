@@ -1,9 +1,9 @@
-export class Order{
+export class Order{    
     constructor(
-        public i: number, //item id
-        public v: number, //vendor.id
-        public p: string, // packaging
-        public q: number, //quantity
-        public n?: string //vendor name
+        public id: number, //item id
+        public vendor: number, //vendor.id
+        public pack: string, // packaging
+        public quantity: number, //quantity
+        public vendorName?: string //vendor name
     ){}
 }

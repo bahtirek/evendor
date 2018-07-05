@@ -53,7 +53,7 @@
         <button type="button" class="btn btn-link" (click)="comparesuspend()" [disabled]="!showPriceButton || !showSubmitButton">Price check and Suspend</button>
         <button type="button" class="btn btn-link" (click)="suspend()" [disabled]="!showSubmitButton">Suspend</button>
         <button type="button" class="btn btn-link" (click)="compare()" [disabled]="!showPriceButton">Price check</button>
-        <button type="button" class="btn btn-link" (click)="submit()" [disabled]="!showSubmitButton">Submit</button>
+        <button type="button" class="btn btn-link" (click)="getVendorsForSubmitModal()" [disabled]="!showSubmitButton">Submit</button>
       </div>
     </div>
     <!-- show order component -->
@@ -61,7 +61,9 @@
       <show-order *ngIf="showOrder" [order]=recentOrder></show-order>
     </div>
   </div>           
-  <modal (delete)="deleteSuspenedOrder()" (ok)="loadSuspendedOrder()" [modal]="modal"></modal>
+  <modal (delete)="deleteSuspenedOrder()" (ok)="loadSuspendedOrder()" (submitVendors)= "submitOrder($event)" [modal]="modal" [vendors]="vendorsForSubmitModal"></modal>
   <spinner [spinner]="spinner"></spinner>
-</div>
+  <!--<submitModal (submit)="submit($event)" (emitSubmitModal)="showSubModal($event)" [showSubmitModal]="showSubmitModal"></submitModal>
+  -->
+  </div>
 

@@ -1,6 +1,7 @@
 export class Vendor{
     constructor(
         public name: string,
-        public id: number
+        public id: number,
+        public submit?: boolean
     ){}
 }

@@ -25,6 +25,7 @@ import { UserModule } from './user/user.module';
 import { TextMaskModule } from 'angular2-text-mask';
 import { AccountActivationComponent } from './account-activation/account-activation.component';
 import { PriceCheckComponent } from './price-check/price-check.component';
+//import { SubmitModalComponent } from './new-order/submit-modal/submit-modal.component';
 //import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({

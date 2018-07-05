@@ -16,21 +16,23 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  setToken(token){
-    localStorage.setItem('token', token);
+  setToken(token, user){
+    localStorage.setItem('evendorToken', token);
+    localStorage.setItem('evendorUser', user);
     this.token = token;
     return true
   }
 
   logout(){
-    localStorage.removeItem('token');
+    localStorage.removeItem('evendorToken');
+    localStorage.removeItem('evendorUser');
     //this.currentUser = null;
     this.token = null;
     this.router.navigate(['/home']);
   }
 
   isLoggedIn(){
-    this.token = localStorage.getItem('token');
+    this.token = localStorage.getItem('evendorToken');
   
     return tokenNotExpired();
   }

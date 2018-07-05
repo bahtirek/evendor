@@ -20,6 +20,7 @@ import { ShowOrderComponent } from './show-order/show-order.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MainComponent } from './main/main.component';
+//import { SubmitModalComponent } from './new-order/submit-modal/submit-modal.component';
 
 
 

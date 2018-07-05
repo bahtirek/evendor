@@ -101,11 +101,11 @@ updateOrder(itemId, pack, vendorId, quantity, itemName?){ //updateOrder needed  
     
     if(this.order.length > 0){
       for(let i = 0; i < this.order.length; i++){                   //going thru each item in order
-        if(this.order[i].i == itemId){                              //if item exist then update
+        if(this.order[i].id == itemId){                              //if item exist then update
           if(quantity != 0){
-            this.order[i]['q'] = quantity;
-            this.order[i]['v'] = vendorId;
-            this.order[i]['p'] = pack;
+            this.order[i]['quantity'] = quantity;
+            this.order[i]['vendor'] = vendorId;
+            this.order[i]['pack'] = pack;
           }else{
             this.order.splice(i, 1);
           }
@@ -169,8 +169,10 @@ updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex?){
 
 
 saveChangesInLocalStorage(){
-    let order = JSON.stringify({order: this.order, token: this.auth.token});
-    localStorage.setItem('order', order);
+  let user = localStorage.getItem('evendorUser');
+  console.log(user)
+    let order = JSON.stringify(this.order);
+    localStorage.setItem('order' + user, order);
   }
 
 

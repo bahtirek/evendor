@@ -4,11 +4,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   selector: 'modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
-  inputs: ['modal', 'note']
+  inputs: ['modal', 'note', 'vendors']
 })
 export class ModalComponent implements OnInit {
 
   public modal;
+  public vendors;
   public note = {name: '', note:'', vendorInd: null, itemInd: null};
 
   constructor() { }
@@ -41,5 +42,11 @@ export class ModalComponent implements OnInit {
     this.modal.display = 'none';
   }
 
+  @Output()
+  submitVendors: EventEmitter<object> = new EventEmitter;
+
+  submit(){
+    this.submitVendors.emit(this.vendors);
+  }
 
 }

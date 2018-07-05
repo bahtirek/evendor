@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
     .subscribe(
       result=>{
         if(result.token){
-          if(this.authService.setToken(result.token)){
+          if(this.authService.setToken(result.token, email)){
             this.router.navigate(["user"])
           }
         }
