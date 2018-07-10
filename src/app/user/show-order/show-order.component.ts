@@ -22,17 +22,20 @@ export class ShowOrderComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     this.toggleVendors(0);
   }
+
   toggleVendors(index){
-    for(let i=0; i < this.order.length; i++){//active one will display
-      if(i == index){
-        this.order[i]['active'] = true;
-      }else{
-        this.order[i]['active'] = false;
+    if(this.order != undefined && this.order.length > 0){
+      for(let i=0; i < this.order.length; i++){//active one will display
+        if(i == index){
+          this.order[i]['active'] = true;
+        }else{
+          this.order[i]['active'] = false;
+        }
       }
+      this.orderByVendor.items = this.order[index]['items'];
+      this.orderByVendor['note'] = this.order[index]['note'];
+      this.orderByVendor['name'] = this.order[index]['name'];
     }
-    this.orderByVendor.items = this.order[index]['items'];
-    this.orderByVendor['note'] = this.order[index]['note'];
-    this.orderByVendor['name'] = this.order[index]['name'];
   }
 
   @Output()
