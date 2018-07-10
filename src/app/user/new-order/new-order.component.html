@@ -46,12 +46,14 @@
 
       <div class="order-buttons text-left" *ngIf="!isReview">
         <button type="button" class="btn btn-link" (click)="review()">Review</button>
+        <button type="button" class="btn btn-link" (click)="suspend()">Save</button>
         <button type="button" class="btn btn-link text-danger" (click)="clear()">Clear</button>
+        
       </div>
       <div class="order-buttons text-left" *ngIf="isReview">
         <button type="button" class="btn btn-link" (click)="review()">Continue ordering</button>
-        <button type="button" class="btn btn-link" (click)="comparesuspend()" [disabled]="!showPriceButton || !showSubmitButton">Price check and Suspend</button>
-        <button type="button" class="btn btn-link" (click)="suspend()" [disabled]="!showSubmitButton">Suspend</button>
+        <button type="button" class="btn btn-link" (click)="comparesuspend()" [disabled]="!showPriceButton || !showSubmitButton">Price check and Save</button>
+        <button type="button" class="btn btn-link" (click)="suspend()" [disabled]="!showSubmitButton">Save</button>
         <button type="button" class="btn btn-link" (click)="compare()" [disabled]="!showPriceButton">Price check</button>
         <button type="button" class="btn btn-link" (click)="getVendorsForSubmitModal()" [disabled]="!showSubmitButton">Submit</button>
       </div>
