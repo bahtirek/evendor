@@ -49,9 +49,11 @@ export class VendorComponent implements OnInit {
  
   };
   //
-  addVendor(vendorName: string){
+  addVendor(newVendor){
+    let vendorName = newVendor.vendorName;
+    let shopList = newVendor.shopList;
     console.log(vendorName)
-    this.http.post<any>(this.url.vendor + '?token=' + this.auth.token, {name: vendorName})
+    this.http.post<any>(this.url.vendor + '?token=' + this.auth.token, {name: vendorName, shopList: shopList})
       .subscribe(
         result=>{
           this.getVendors();
@@ -89,7 +91,7 @@ export class VendorComponent implements OnInit {
    }
 
   updateVendor(data){
-    this.http.put(this.url.vendor + '/' + data.id + '?token=' + this.auth.token, {name: data.name})
+    this.http.put(this.url.vendor + '/' + data.id + '?token=' + this.auth.token, {name: data.name, shopList: data.shopList})
       .subscribe(
         result=>{
           console.log(result)
