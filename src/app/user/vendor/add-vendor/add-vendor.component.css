@@ -9,3 +9,8 @@
     background:#9ECFE9;
     color: white;
 }
+
+.form-check-label {
+    padding-left: 2.25rem;
+}
+

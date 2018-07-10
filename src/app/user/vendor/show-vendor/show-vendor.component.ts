@@ -18,6 +18,9 @@ export class ShowVendorComponent implements OnInit {
 
   public editVendor: boolean = false;
   public vendorName: string = '';
+  public shopList: boolean = false;
+
+
 
   @Output()
   remove: EventEmitter<object> = new EventEmitter();
@@ -31,13 +34,22 @@ export class ShowVendorComponent implements OnInit {
 
   saveVendor(){
     this.vendor.name = this.vendorName
-    this.save.emit({name: this.vendor.name, id: this.vendor.id});
+    this.save.emit({name: this.vendor.name, id: this.vendor.id, shopList: this.shopList});
     this.editVendor = false;
   }
 
   edit(name){
+    console.log(this.vendor)
+    console.log(this.shopList)
     this.editVendor = true;
     this.vendorName = name;
+    if(this.vendor.id == this.vendor.shopList){
+      this.shopList = true;
+      console.log(this.shopList)
+    }else{
+      this.shopList == false;
+      console.log(this.shopList)
+    }
   }
 
   cancel(){

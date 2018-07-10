@@ -13,12 +13,14 @@ export class AddVendorComponent implements OnInit {
   ngOnInit() { }
   
   public vendorName: string;
+  public shopList: boolean;
 
   @Output()
-  add: EventEmitter<string> = new EventEmitter();
+  add: EventEmitter<object> = new EventEmitter();
   
   addVendor(){
-    this.add.emit(this.vendorName);
+    this.add.emit({vendorName: this.vendorName, shopList: this.shopList});
+    this.shopList = false;
     this.vendorName = "";
   }
   
