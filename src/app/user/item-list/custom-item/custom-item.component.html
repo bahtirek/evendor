@@ -5,7 +5,8 @@
   <div class="form-group row">
     <label for="customName" class="col-sm-3 col-form-label">Item name</label>
     <div class="col-sm-9">
-      <input type="text" name="customName" class="form-control" [(ngModel)]="customItemName" ngModel>
+      <input type="text" name="customName" class="form-control" [(ngModel)]="customItemName" (keyup)="isStringEmpty()" ngModel>
+      <span class="text-danger" *ngIf="!error">Field cannot be empty</span>
     </div>
   </div>
   <div class="form-group row">
@@ -19,7 +20,7 @@
             </div>
          <div class="col-sm-3">     
                   <button class="btn btn-link from-control" type="button" 
-                        [disabled]="!(vendorVal && customItemName)"
+                        [disabled]="(!(vendorVal && customItemName && error))"
                         (click)="add(vendors[vendorVal]['id'])">
                         Add to list
                   </button>
