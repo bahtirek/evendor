@@ -7,6 +7,8 @@ import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { url } from '../user/shared/url';
 import { emailValidator} from '../validators/email.validators';
+import { emptyStringValidator} from '../validators/emptystring.validators';
+import { spaceValidator} from '../validators/space.validators';
 
 @Component({
   selector: 'signup-form',
@@ -36,7 +38,8 @@ export class SignupFormComponent implements OnInit {
   public validationMessages = {
     'name': {
       'required': 'Name is required',
-      'maxlength': 'Name max length is 20 characters'
+      'maxlength': 'Name max length is 30 characters',
+      'emptyStringValidator': 'Field cannot be empty'
     },
     'email': {
       'required': 'Email is required',
@@ -45,15 +48,18 @@ export class SignupFormComponent implements OnInit {
     },
     'password': {
       'required': 'Password is required',
-      'minlength': 'Passwords min length is 6 characters'
+      'minlength': 'Passwords min length is 6 characters',
+      'spaceValidator': 'Password cannot contain space'
     } ,
     'password2': {
       'required': 'Password is required',
-      'minlength': 'Passwords min length is 6 characters'
+      'minlength': 'Passwords min length is 6 characters',
+      'spaceValidator': 'Password cannot contain space'
     },
     'oldpassword': {
       'required': 'Password is required',
-      'oldPasswordValidator': 'Wrong password'
+      'oldPasswordValidator': 'Wrong password',
+      'spaceValidator': 'Password cannot contain space'
     }
   }
   
@@ -81,7 +87,8 @@ export class SignupFormComponent implements OnInit {
     this.signupForm = this.fb.group({
       'name': [this.signup.name,[
         Validators.required,
-        Validators.maxLength(20)
+        Validators.maxLength(30),
+        emptyStringValidator
       ]],
       'email': [this.signup.email, [
         Validators.required,
@@ -89,14 +96,17 @@ export class SignupFormComponent implements OnInit {
       ]],
       'password': [this.signup.password, [
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(6),
+        spaceValidator
       ]],
       'password2': [this.signup.password2, [
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(6),
+        spaceValidator
       ]],
       'oldpassword': [this.signup.oldpassword, [
-        Validators.required
+        Validators.required,
+        spaceValidator
       ]]
     });
 
@@ -115,6 +125,7 @@ export class SignupFormComponent implements OnInit {
         
         let control = form.get(field);//access to form fild(email, password itd)
         if (control && control.dirty && !control.valid ) {
+          console.log(control.value)
             let message = this.validationMessages[field];
             for (let key in control.errors) {
                 this.formErrors[field].push(message[key]);
