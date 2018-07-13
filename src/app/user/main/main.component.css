@@ -25,6 +25,7 @@ h4{
 
     .card:hover{
         box-shadow: 2px 5px 10px 6px lightgrey;
+        cursor: pointer;
     }
 
 }
