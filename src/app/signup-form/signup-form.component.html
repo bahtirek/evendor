@@ -76,7 +76,7 @@
   <!-- CREDENTIALS EDTING -->
 
 
-    <p class="text-warning"> **All fields are required</p>
+    <p class="text-danger"> **All fields are required</p>
     <div *ngIf="!editCredentials">
         <button type="submit" class="btn btn-link mt-3" [disabled]="!signupForm.valid">Sign up</button>
          <button  class="btn btn-link mt-3" (click)="cancel()">Cancel</button>
