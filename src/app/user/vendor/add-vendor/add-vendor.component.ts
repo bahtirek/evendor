@@ -15,6 +15,7 @@ export class AddVendorComponent implements OnInit {
   public vendorName: string;
   public shopList: boolean;
 
+
   @Output()
   add: EventEmitter<object> = new EventEmitter();
   
@@ -22,6 +23,12 @@ export class AddVendorComponent implements OnInit {
     this.add.emit({vendorName: this.vendorName, shopList: this.shopList});
     this.shopList = false;
     this.vendorName = "";
+  }
+
+  public error = true;
+  isStringEmpty(){
+    let stringRegex = /^(?!\s*$).+/i;
+    this.error = stringRegex.test(this.vendorName);
   }
   
 }

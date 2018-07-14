@@ -56,4 +56,10 @@ export class ShowVendorComponent implements OnInit {
     this.editVendor = false;
     this.vendorName = '';
   }
+
+  public error = true;
+  isStringEmpty(){
+    let stringRegex = /^(?!\s*$).+/i;
+    this.error = stringRegex.test(this.vendorName);
+  }
 }

@@ -8,7 +8,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { states } from '../shared/states'
 import { emailValidator } from '../../validators/email.validators';
 import { phoneValidator } from '../../validators/phone.validator';
-
+import { emptyStringValidator} from '../../validators/emptystring.validators';
 
 @Component({
   selector: 'contacts',
@@ -38,29 +38,35 @@ export class ContactsComponent implements OnInit {
   public validationMessages = {
     'company': {
       'required': 'Company name is required',
-      'maxlength': 'Company name\'s length can\'t exceed is 30 characters'
+      'maxlength': 'Company name\'s length can\'t exceed is 30 characters',
+      'emptyStringValidator': 'Field cannot be empty'
+
     },
     'email': {
       'required': 'Email is required',
-      'emailValidator': 'Wrong email format'
+      'emailValidator': 'Wrong email format',
+      'emptyStringValidator': 'Field cannot be empty'
     },
     'address': {
-      'required': 'address is required'
+      'required': 'address is required',
+      'emptyStringValidator': 'Field cannot be empty'
     } ,
     'city': {
       'required': 'city is required',
-      'maxlength': 'City\'s length can\'t exceed 30 characters'
+      'maxlength': 'City\'s length can\'t exceed 30 characters',
+      'emptyStringValidator': 'Field cannot be empty'
     } ,
     'zipcode': {
-      'required': 'zip is required',
-      'maxlength': 'Zip code\'s length can\'t exceed 5 characters',
-      'minlength': 'Zip should be 5 digits'
+      'required': 'Zipcode is required',
+      'maxlength': 'Zipcode\'s length can\'t exceed 5 characters',
+      'minlength': 'Zipcode should be 5 digits',
+      'emptyStringValidator': 'Field cannot be empty'
     } ,
     'state': {
-      'required': 'state is required'
+      'required': 'State is required'
     } ,
     'phone': {
-      'required': 'phone is required',
+      'required': 'Phone is required',
       'phoneValidator': 'Wrong phone number'
     } 
   }
@@ -87,18 +93,22 @@ export class ContactsComponent implements OnInit {
     this.contactsForm = this.fb.group({
       'company': [this.contacts.company, [
         Validators.required,
-        Validators.maxLength(30)
+        Validators.maxLength(30),
+        emptyStringValidator
       ]],
       'email': [this.contacts.email, [
         Validators.required,
-        emailValidator
+        emailValidator,
+        emptyStringValidator
       ]],
       'address': [this.contacts.address, [
-        Validators.required
+        Validators.required,
+        emptyStringValidator
       ]],
       'city': [this.contacts.city, [
         Validators.required,
-        Validators.maxLength(30)
+        Validators.maxLength(30),
+        emptyStringValidator
       ]],
       'state':[this.contacts.state, [
         Validators.required
@@ -106,7 +116,8 @@ export class ContactsComponent implements OnInit {
       'zipcode': [this.contacts.zipcode, [
         Validators.required,
         Validators.maxLength(5),
-        Validators.minLength(5)
+        Validators.minLength(5),
+        emptyStringValidator
       ]],
       'phone': [this.contacts.phone, [
         Validators.required,

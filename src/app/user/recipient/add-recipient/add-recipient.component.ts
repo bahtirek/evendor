@@ -46,6 +46,11 @@ export class AddRecipientComponent implements OnInit {
     this.cancel.emit();
   }
 
+  public error = true;
+  isStringEmpty(){
+     let stringRegex = /^(?!\s*$).+/i;
+     this.error = stringRegex.test(this.recipient.name);
+   }
   
     
   }
