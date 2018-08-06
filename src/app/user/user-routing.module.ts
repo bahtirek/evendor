@@ -1,9 +1,10 @@
+import { PriceComponent } from './price/price.component';
 import { MainComponent } from './main/main.component';
 import { AuthGuard } from './../services/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserComponent } from "./user.component";
-import { VendorComponent, ItemListComponent,  NewOrderComponent,  LocationsComponent, AccountComponent, OrderHistoryComponent, RecipientComponent, GroupComponent, RegistrationComponent } from './index';
+import { VendorComponent, ItemListComponent,  NewOrderComponent,  LocationsComponent, AccountComponent, OrderHistoryComponent, RecipientComponent, GroupComponent, RegistrationComponent} from './index';
 
 
 const routes: Routes = [
@@ -58,6 +59,10 @@ const routes: Routes = [
           {
             path: "groups",
             component: GroupComponent
+          },
+          {
+            path: "price",
+            component: PriceComponent
           }
         ]
       }

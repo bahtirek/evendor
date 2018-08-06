@@ -1,8 +1,10 @@
+import { element } from 'protractor';
 import { packList } from './../user/shared/packaging';
 import { url } from './../user/shared/url';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from "@angular/router";
+
 
 @Component({
   selector: 'app-price-check',
@@ -11,6 +13,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class PriceCheckComponent implements OnInit {
 
+  //public mask: any[] = [ /\d/, /\d/,'.',  /\d/, /\d/, /\d/];
   url = url;
   message = '';
   itemList = [];
@@ -19,6 +22,10 @@ export class PriceCheckComponent implements OnInit {
   expMessage;
   listonly = false;
   vendorNote = '';
+  public priceRequestDate;
+  
+
+
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
@@ -28,6 +35,8 @@ export class PriceCheckComponent implements OnInit {
     }
     this.id = this.activatedRoute.snapshot.params["id"];
     console.log(this.id)
+    let link = JSON.parse(this.id);
+    this.priceRequestDate = link.date;
     this.http.get<any[]>(this.url.getprice + '/' + this.id)
       .subscribe(
         result=>{
@@ -62,9 +71,12 @@ export class PriceCheckComponent implements OnInit {
 
   clear(){
     for(let item of this.itemList){
-      item.price = '';
-      item.pack = '';
+      if(!item.priceGiven){
+        item.price = '';
+        item.pack = 'Case';
+      }
     }
+    this.vendorNote = '';
   }
 
   getNumber(event){
@@ -78,5 +90,23 @@ export class PriceCheckComponent implements OnInit {
   setVendorNote(text){
     this.vendorNote = text;
   }
+
+  
+  
+
+  public mask = function(rawValue) {
+    let mask = [];
+    for (var i = 0; i < rawValue.length; i++) {
+      if(rawValue[i] != '.'){
+        mask.push(/\d/);
+      }
+    }
+    if(mask.length > 2){
+      mask.splice(2, 0 , '.');
+    }else{
+      mask.push('.');
+    }
+   return mask.reverse();
+ }
 
 }

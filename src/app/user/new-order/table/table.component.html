@@ -1,15 +1,31 @@
+
 <table class="table table-hover table-sm">
     <tbody>
       <tr *ngFor="let item of itemList; let itemInd=index">
         <td *ngIf="item.quantity > 0 || !isReview || item.compare" [style.background-color]="item.compare ? '#fff8f0': ''">
           <div class="row">
             <div class="col-sm-5">
-              <p>{{item.name}}</p>
-              <small class="text-warning">{{item.note}}</small>
+              <p>
+                  
+                 
+                <span class="badge badge-pill"
+                  
+                  [class.badge-success]="item.lastOrder < 15"
+                  [class.badge-warning]="item.lastOrder > 14"
+                  [class.badge-danger]="item.lastOrder>30"
+                  title="Ordered {{ item.lastOrder }} days ago"
+                  >
+                  {{item.lastOrder}}
+                </span>
+                
+                {{item.name}}
+              </p>
+             <small class="text-warning">{{item.note}}</small>
             </div>
             <div class="col-sm-7">
               <div class="row justify-content-center">
                 <div class="col-xs-3">
+                  
                     <div class="input-group">
                         <div class="input-group-addon minus" (click)="decrease(itemInd)">-</div>
                   <select class="form-control form-control-sm" name="quantity" [(ngModel)]="item.quantity" (change)="updateOrder(item.id, item.pack, item.vendorId, item.quantity, item.name)" ngModel>
@@ -45,4 +61,3 @@
       </tr>
     </tbody>
   </table>
-

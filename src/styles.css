@@ -40,3 +40,7 @@ button{
 .error-input{
     border-color: #e41313;
 }
+
+.btn{
+    cursor: pointer;
+}

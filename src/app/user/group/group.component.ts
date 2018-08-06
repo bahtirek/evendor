@@ -104,4 +104,10 @@ export class GroupComponent implements OnInit {
       )
     
   }
+
+  public error = true;
+  isStringEmpty(){
+     let stringRegex = /^(?!\s*$).+/i;
+     this.error = stringRegex.test(this.groupName);
+   }
 }

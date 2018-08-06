@@ -39,6 +39,9 @@ export class RecipientComponent implements OnInit {
       result=>{
         console.log(result)
         this.vendors = result;
+        this.vendors.forEach(vendor => {
+          console.log(vendor);
+        });
       },
       error=>{
         console.log(error)
@@ -54,6 +57,7 @@ export class RecipientComponent implements OnInit {
     .subscribe(
       result=>{
         this.recipients = result;
+        console.log(result)
       },
       error=>{
         console.log(error)

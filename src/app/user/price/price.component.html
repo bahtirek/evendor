@@ -1,0 +1,54 @@
+
+<h4>Price review</h4>
+<hr>
+<section class="flex-table">
+    <div *ngFor="let item of itemsList; let itemInd=index" class="row">
+        <div class="name">
+          <p>{{item.name}}</p>
+        </div>
+        <div class="props">
+            <div class="prop quantity">
+                <div class="input-group">
+                    <div class="input-group-addon minus" (click)="decrease(itemInd)">-</div>
+                    <select class="form-control form-control-sm" 
+                            name="quantity" 
+                            [(ngModel)]="item.quantity" 
+                            ngModel>
+                      <option *ngFor="let quantity of [0,1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20]" >{{quantity}}</option>
+                    </select>
+                    <div class="input-group-addon" (click)="increase(itemInd)">+</div>
+                  </div>
+            </div>
+            <div class="prop pack">
+                <select class="form-control form-control-sm ml" name="item.pack" [(ngModel)]="item.pack" ngModel>
+                  <option value="">{{item.pack}}</option>  
+                  <option *ngFor="let pack of packList" >{{pack.type}}</option>
+                  </select>
+            </div>
+            <div class="prop vendors">
+                <select class="form-control form-control-sm" (change)="changeVendor(newVendor.value, itemInd)" #newVendor ngModel>
+                  <option value="" selected>{{item.vendorName}}</option>
+                  <option *ngFor="let vendOpt of vendors; let optInd=index" value="{{vendOpt.id}}">{{vendOpt.name}}</option>
+                </select>
+              </div>
+            <div class="prop price"> 
+              <ul >
+                <li *ngFor="let price of item.price; let priceIndex=index"
+                [ngStyle]="{'backgroundColor': priceIndex % 2 == 0 ? 'white' : '#fbf7f7'}"
+                >
+                  {{price.vendorName}} - $ {{price.price}} {{price.pack}}
+                </li>
+              </ul>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="priceRequestMessage">
+        <p class="text-danger ml-3">{{priceRequestMessage}}</p>
+      </div>
+      <div class="order-buttons text-left" *ngIf="!priceRequestMessage">
+          <button type="button" class="btn btn-link" (click)="suspend()">Save</button>
+          <button type="button" class="btn btn-link" routerLink="../main">Cancel</button><!-- 
+          <a class="nav-link" routerLink="../home">Home</a><a class="nav-link" routerLink="../home">Home</a> -->
+        </div>
+</section>
+<spinner [spinner]="spinner"></spinner>

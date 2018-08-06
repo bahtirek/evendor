@@ -1,0 +1,136 @@
+
+
+.input-group-addon{
+    padding: 0 0.5rem 0 0.5rem;
+    cursor: pointer;
+
+}
+
+.minus{
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+}
+
+
+hr{
+    margin-bottom: 1rem;
+}
+
+h4{
+    padding: 1rem 1rem 0rem 2rem;
+    color: #5288b5
+}
+
+.order-buttons{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.flex-table .row{ /* main flex box */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 7px;
+    border-bottom: 1px solid #9B9B9B;
+}
+
+.flex-table .name{ /* first flex item */
+    flex: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    
+}
+
+.flex-table .props{ /* second flex item also is flexbox*/
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.flex-table .prop{ /* flex item of  props flexbox*/
+    padding: 0 5px;
+    box-sizing: border-box;
+    align-self: center;
+}
+
+.price{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+
+.prop ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+@media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ }
+@media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
+@media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
+@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+    .flex-table .row{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        margin: 7px;
+        border-bottom: 1px solid #9B9B9B;
+    }
+    
+    .flex-table .name{
+        flex: 1;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        
+    }
+    
+    .flex-table .props{
+        /* flex: 2; */
+        display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+        
+    }
+    
+    .flex-table .prop{
+        padding: 0 5px;
+        box-sizing: border-box;
+        align-self: center;
+    }
+    
+    
+    .price{
+    /*  order: 2; */
+        justify-content: flex-end;
+    }
+
+    .prop ul{
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    hr{
+        margin-bottom: 2rem;
+    }
+    
+    h4{
+        padding: 2rem 3rem 2rem 3rem;
+        color: #5288b5
+    }
+    
+    .order-buttons{
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+    }
+
+}
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+@media (min-width:1281px) { /* hi-res laptops and desktops */ }

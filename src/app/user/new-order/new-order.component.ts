@@ -20,7 +20,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./new-order.component.css']
 })
 export class NewOrderComponent implements OnInit {
-
+  
   public vendors: any;
   //public packList = packList;
   //public userConfig = userConfig;
@@ -51,7 +51,6 @@ export class NewOrderComponent implements OnInit {
   constructor(private http: HttpClient, private cookieService: CookieService, private router: Router, private auth: AuthService) {}
 
   ngOnInit() {
-
     this.http.get(this.url.vendors + '?token=' + this.auth.token) //getting vendors
       .subscribe( //vendors subscribe
         result => {
@@ -71,7 +70,7 @@ export class NewOrderComponent implements OnInit {
                   .subscribe(
                     result => { // itemList subscribe
                       this.itemList = result;
-                      //console.log(this.itemList)
+                      console.log(this.itemList)
                     },
                     error => {
                       //console.log(error)
@@ -271,6 +270,7 @@ setVendorNote(text, index){
 }
 
 compare(){
+  this.spinner = "block";
   let i = 0;
   let compare = [];
   //console.log(this.itemList)
@@ -284,11 +284,16 @@ compare(){
     i++;
     if (i == this.itemList.length) { //if it last loop of parent forloop(for (let item of this.itemList)) submit order
       console.log(compare)
-      this.http.post(this.url.compare + '?token=' + this.auth.token, {compare: compare})
+      this.http.post<any>(this.url.compare + '?token=' + this.auth.token, {compare: compare})
         .subscribe(
           result => {
             //console.log(result)
-            
+            if(result.error == 'emptyaccount'){
+              this.modal.account = "block";
+            }else if(result.request == 'ok'){
+              this.modal.alertDisplay = 'block';
+              this.modal.text2 = 'We have sent an email with price request to salesperson.';
+            }
             this.spinner = "none";
           },
           error => {
@@ -347,7 +352,7 @@ getVendorsForSubmitModal(){
        this.spinner = 'none';
       }
     }
-    console.log(this.vendorsForSubmitModal)
+    //console.log(this.vendorsForSubmitModal)
   }
 
   this.modal.showSubmitModal = 'block';
@@ -389,34 +394,31 @@ submitOrder(vendors){
           
         }
         i++;
-        
-        if (i == this.itemList.length) { //if it last loop of parent forloop(for (let item of this.itemList)) submit order
-          this.http.post(this.url.order + '?token=' + this.auth.token, {order: newOrder, note: note})
-          .subscribe(
-            result => {
-              console.log(result)
-              this.recentOrder = result;
-              this.showOrder = true;
-              
-            },
-            error => {
-              console.log(error)
-              this.spinner = "none";
-            },
-            () => {
-              this.submitSuspendedOrder(suspendedOrder);
-              
-              this.spinner = "none";
-            }
-          ); 
-         // console.log(newOrder)
-          //this.spinner = 'none';
-           
-        }
       }
-    
-    v++;
+      v++; 
+      if (v == vendors.length && i == this.itemList.length) { //if it last loop of parent forloop(for (let item of this.itemList)) submit order
+        this.http.post(this.url.order + '?token=' + this.auth.token, {order: newOrder, note: note})
+        .subscribe(
+          result => {
+            //console.log(result)
+            this.recentOrder = result;
+          },
+          error => {
+            //console.log(error)
+            this.spinner = "none";
+          },
+          () => {
+            this.submitSuspendedOrder(suspendedOrder);
+            this.showOrder = true;
+            this.spinner = "none";
+          }
+        ); 
+        //console.log(newOrder)
+        //this.spinner = 'none';
+         
+      }
   }
+  
 
 }
 
@@ -443,6 +445,7 @@ suspend() {
 }
 
 submitSuspendedOrder(suspendedOrder) {
+  console.log(suspendedOrder)
   this.http.post(this.url.suspend + '?token=' + this.auth.token, {order: suspendedOrder})
   .subscribe(
     result => {
@@ -460,6 +463,39 @@ submitSuspendedOrder(suspendedOrder) {
   );
 }
 
+sortBy(sort){
+  console.log(this.by)
+  console.log(this.itemListBy)
+  if(sort == 'az'){
+    this.itemList.sort(function(a,b){
+      return a.name.localeCompare(b.name);
+    })
+  }else if(sort == 'least'){
+    this.itemList.sort(function(a, b) { 
+      return a.ordercount - b.ordercount
+    });
+  }else if(sort == 'recent'){
+    this.itemList.sort(function(a, b) { 
+      var d1 = new Date(b.date).getTime();
+      var d2 = new Date(a.date).getTime();
+      return  d1 - d2;
+    });
+  }else if(sort == 'notrecent'){
+    this.itemList.sort(function(a, b) { 
+      var d1 = new Date(b.date).getTime();
+      var d2 = new Date(a.date).getTime();
+      return  d2 - d1;
+    });
+  }else{
+    this.itemList.sort(function(a, b) { 
+      return b.ordercount - a.ordercount
+    });
+  }
+  if(this.by != 'byOrder'){
+    this.arrange(this.by)
+  }
+  
+}
 
 
 

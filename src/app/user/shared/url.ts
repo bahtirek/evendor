@@ -28,11 +28,14 @@ export const url = {
     orderlistforupdate: <string> "http://evendors.host/api/orderlistforupdate",
     orderupdate: <string> "http://evendors.host/api/orderupdate",
     suspend: <string> "http://evendors.host/api/suspendedorder",
+    updatesuspend: <string> "http://evendors.host/api/updatesuspendedorder",
     itemsnote: <string> "http://evendors.host/api/itemsnote",
     accounts: <string> "http://evendors.host/api/accounts",
     passvalidation: <string> "http://evendors.host/api/passvalidation",
     loginedit: <string> "http://evendors.host/api/loginedit",
     compare: <string> "http://evendors.host/api/compare",
     getprice: <string> "http://evendors.host/api/getprice",
-    sendprice: <string> "http://evendors.host/api/sendprice"
+    reviewprice: <string> "http://evendors.host/api/reviewprice",
+    sendprice: <string> "http://evendors.host/api/sendprice",
+    copylist: <string> "http://evendors.host/api/copylist"
 }

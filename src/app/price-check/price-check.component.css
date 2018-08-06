@@ -45,3 +45,19 @@ p{
  input[type="text"], select {
     width: 5rem;
 }
+
+.right {
+    
+    unicode-bidi: bidi-override;
+    text-align: right;
+}
+
+.close{
+    padding-bottom: .4rem;
+    padding-left: .1rem;
+    color: #fd0000;
+}
+
+.right{
+    padding-right: .5rem;
+}

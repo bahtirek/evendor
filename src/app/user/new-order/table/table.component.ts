@@ -23,6 +23,7 @@ export class TableComponent implements OnInit {
   public isReview = false;
   public onUpdate;
   public vendorIndex;
+  public lastOrder = 0;
 
   constructor(private cookieService: CookieService, private auth: AuthService) { }
 

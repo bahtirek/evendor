@@ -66,3 +66,39 @@
 
 </div>
 
+<div class="custom-item-form">
+    <hr>
+    <h5>Copy existing list</h5>
+    <br>
+    <p class="text-warning">You can copy vendors and items list from an existing account.</p>
+    <p class="mb-3 text-warning">Enter account's email that you want to copy from</p>
+    
+  <div class="form-group row">
+    <label for="customName" class="col-sm-2 col-form-label">Enter email</label>
+    <div class="col-sm-8">
+      <form autocomplete="false">
+        <input type="text" name="email" class="form-control" 
+        required  
+        pattern="[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
+        [(ngModel)]="emailToCopy" 
+        #email="ngModel"></form>
+        <div *ngIf="(email.touched || email.dirty) && email.errors">
+          <div [hidden]="!email.errors?.pattern"  class="text-danger ">
+          Email format is invalid!!!
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-2">     
+        <button class="btn btn-link from-control" type="button" 
+              [disabled]="(!(email.touched || email.dirty) && email.errors)"
+              (click)="copyList()">
+              Submit
+        </button>
+      
+    </div>
+  </div>
+
+
+</div>
+
+

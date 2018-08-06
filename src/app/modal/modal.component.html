@@ -82,7 +82,9 @@
 
               <h6 class="my-3">{{modal.text2}}</h6>
             </div>
- 
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="modal.alertDisplay='none'">Ok</button>
+             </div>
         </div>
       </div>
   </div>
@@ -136,3 +138,24 @@
       </div>
     </div>
   </div>
+
+  <div [ngStyle]="{'display': modal.account}" class="modal">
+    
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Sorry</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span (click)="modal.account='none'">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-danger">
+              <h6>You cannot precede this action when you have account data empty</h6>
+              <h6 class="text-warning">Go to account page and fill out all necessary fields</h6>
+            </div>
+            <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" (click)="router.navigate(['user/account'])">Ok</button>
+            </div>
+        </div>
+      </div>
+    </div>

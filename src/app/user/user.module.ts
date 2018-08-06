@@ -20,6 +20,7 @@ import { ShowOrderComponent } from './show-order/show-order.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MainComponent } from './main/main.component';
+import { PriceComponent } from './price/price.component';
 //import { SubmitModalComponent } from './new-order/submit-modal/submit-modal.component';
 
 
@@ -35,6 +36,6 @@ import { MainComponent } from './main/main.component';
   exports: [
     SignupFormComponent
   ],
-  declarations: [VendorComponent, SignupFormComponent, ItemListComponent, NewOrderComponent, LocationsComponent, AccountComponent, OrderHistoryComponent, AddVendorComponent, ShowVendorComponent, RecipientComponent, AddRecipientComponent, MainListComponent, NewListComponent, CustomItemComponent, ModalComponent, GroupComponent, TableComponent, SpinnerComponent, ShowOrderComponent, ContactsComponent, RegistrationComponent, MainComponent]
+  declarations: [VendorComponent, SignupFormComponent, ItemListComponent, NewOrderComponent, LocationsComponent, AccountComponent, OrderHistoryComponent, AddVendorComponent, ShowVendorComponent, RecipientComponent, AddRecipientComponent, MainListComponent, NewListComponent, CustomItemComponent, ModalComponent, GroupComponent, TableComponent, SpinnerComponent, ShowOrderComponent, ContactsComponent, RegistrationComponent, MainComponent, PriceComponent]
 })
 export class UserModule { }

@@ -1,11 +1,20 @@
 <div class="row justify-content-center">
-  <div class="col-md-10">
+  <div class="col-md-12">
     <!-- place order component -->
     <div *ngIf="!showOrder">
       <div class="order-buttons text-left">
         <button type="button" class="btn btn-link" (click)="by='byOrder'">By Order</button>
         <button type="button" class="btn btn-link" (click)="arrange('byVendor')">By Vendor</button>
         <button *ngIf="(groups!==undefined && groups.length>0)" type="button" class="btn btn-link" (click)="arrange('byGroup')">By Group</button>
+        <label class="sort"> Sort:
+        <select name="ordercount" (change)="sortBy(orderCount.value)" #orderCount>
+          <option value="most" selected>Most ordered</option>
+          <option value="least">Least ordered</option>
+          <option value="recent">Recent ordered</option>
+          <option value="notrecent">Not Recent ordered</option>
+          <option value="az">A - Z</option>
+        </select>
+        </label>
       </div>
       <ng-container *ngIf="(by == 'byOrder'); else elseTemplate"><!-- by Order -->
         <div class="card">

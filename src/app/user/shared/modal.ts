@@ -1,1 +1,1 @@
-export const modal = {errDisplay:'none', noteDisplay: 'none', agreementDisplay: 'none', alertDisplay: 'none', suspendDisplay: 'none', showSubmitModal: 'none', text: "", text2: "", text3: "", date: ''};
+export const modal = {errDisplay:'none', noteDisplay: 'none', agreementDisplay: 'none', alertDisplay: 'none', suspendDisplay: 'none', showSubmitModal: 'none', account: 'none', text: "", text2: "", text3: "", date: ''};

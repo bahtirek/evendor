@@ -24,7 +24,8 @@ export class NewListComponent implements OnInit {
   private groups: Group[];
   private url = url;
   private token = this.token;
-
+  public emailToCopy = ''
+  public emailToCopyMessage = '';
   constructor(private crud: CRUD, private http: HttpClient) { }
 
   ngOnInit() {
@@ -184,6 +185,26 @@ export class NewListComponent implements OnInit {
         this.modal.errDisplay = "block";
       }
     );
-
   }
+
+  copyList(){
+
+    this.http.post<any>(this.url.copylist + '?token=' + this.token, {email: this.emailToCopy})
+      .subscribe(
+        result=>{
+          if(result.error == 'emptyaccount'){
+            this.modal.account = "block";
+          }else if(result.email == this.emailToCopy){
+            this.modal.alertDisplay = 'block';
+            this.modal.text2 = 'We have sent an email with instructions. Please let account holder that you want to copy items list from to follow the instructions attached the email.';
+          }
+        },
+        error=>{
+          console.log(error)
+        },
+        ()=>{}
+      )
+  }
+
+
 }

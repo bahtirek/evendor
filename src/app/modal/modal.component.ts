@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -12,7 +13,7 @@ export class ModalComponent implements OnInit {
   public vendors;
   public note = {name: '', note:'', vendorInd: null, itemInd: null};
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
