@@ -28,12 +28,12 @@ export class AccountComponent implements OnInit {
     this.http.get<Contact>(this.url.accounts, {params: this.token})
       .subscribe(
         result=>{
-          console.log(result);
+          //console.log(result);
           this.contacts = result[0];
-          console.log(this.contacts);
+          //console.log(this.contacts);
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         },
         ()=>{
           if(this.contacts){
@@ -50,12 +50,12 @@ export class AccountComponent implements OnInit {
       this.http.get(this.url.loginedit, {params: this.token})
       .subscribe(
         result=>{
-          console.log(this.signup)
+          //console.log(this.signup)
           this.signup.name = result[0][0]['name']
           this.signup.email = result[0][0]['email']
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       );
   }

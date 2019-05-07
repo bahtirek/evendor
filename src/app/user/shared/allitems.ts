@@ -16,8 +16,9 @@ export const allItems = [
     new AllItem('Spices, Dressing, Sauce', 'spi', []),
     new AllItem('Janitorial', 'jan', []),
     new AllItem('Flour, Bread', 'flo', []),
-    new AllItem('Produce, canned fruit&veggie', 'pro', []),
+    new AllItem('Produce, canned fruit & veggie', 'pro', []),
     new AllItem('Other', 'oth', []),
+    new AllItem('Dessert', 'des', []),
     new AllItem('Custom', 'cus', [])
 ];
 

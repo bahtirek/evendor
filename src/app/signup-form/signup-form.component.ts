@@ -1,9 +1,9 @@
 import { AuthService } from './../services/auth.service';
 import { Signup } from './../user/shared/signup';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { url } from '../user/shared/url';
 import { emailValidator} from '../validators/email.validators';
@@ -125,11 +125,11 @@ export class SignupFormComponent implements OnInit {
         
         let control = form.get(field);//access to form fild(email, password itd)
         if (control && control.dirty && !control.valid ) {
-          console.log(control.value)
+          //console.log(control.value)
             let message = this.validationMessages[field];
             for (let key in control.errors) {
                 this.formErrors[field].push(message[key]);
-                console.log(this.formErrors[field])
+                //console.log(this.formErrors[field])
             }
         }
       if(field == 'password2') password2 = control;
@@ -145,12 +145,12 @@ export class SignupFormComponent implements OnInit {
 
 
   onSignup() {
-    console.log("submitted");
-    console.log(this.signupForm.value);
+    //console.log("submitted");
+    //console.log(this.signupForm.value);
     let userName = this.signupForm.value.name;
     let email = this.signupForm.value.email;
     let password = this.signupForm.value.password;
-    console.log(email)
+    //console.log(email)
     this.spinner = 'block';
     if(this.editCredentials){
       let oldpassword = this.signupForm.value.oldpassword;
@@ -162,12 +162,12 @@ export class SignupFormComponent implements OnInit {
       )
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           this.spinner = 'none';
           this.cancelCredentialEditing()
         },
         error=>{
-          console.log(error);
+          //console.log(error);
           if(error.error.email && error.error.email == 'used'){
             this.formErrors.email.push('Email in use');
           }
@@ -186,17 +186,17 @@ export class SignupFormComponent implements OnInit {
       )
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           this.linkId = result.message;
-          console.log()
+          //console.log()
           this.spinner = 'none';
           this.toggleView('success');
           //this.router.navigate(['/home']);
         },
         error=>{
           this.spinner = 'none';
-          console.log(error.error.errors.email)
-          console.log(error.message)
+          //console.log(error.error.errors.email)
+          //console.log(error.message)
 
           if(error.error.errors.email){
             this.formErrors.email = error.error.errors.email;

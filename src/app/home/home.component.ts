@@ -105,12 +105,8 @@ export class HomeComponent implements OnInit {
             
           }
         }
-        console.log(result)
       },
       error=>{
-        console.log(error)
-        console.log(error.error)
-        console.log(error.status)
         this.formErrors.login = '';
         if(error.status == 401){
           this.formErrors.login = this.validationMessages.login.unauth;

@@ -1,7 +1,6 @@
 import { url } from './../../shared/url';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { CRUD } from '../../shared/crud';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -18,7 +17,7 @@ export class MainListComponent implements OnInit {
   private url = url;
   private token = this.token;
   
-  constructor(private crud: CRUD, private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
   ngOnInit() {
 
   }

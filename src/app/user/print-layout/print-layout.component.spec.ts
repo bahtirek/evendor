@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubmitModalComponent } from './submit-modal.component';
+import { PrintLayoutComponent } from './print-layout.component';
 
-describe('SubmitModalComponent', () => {
-  let component: SubmitModalComponent;
-  let fixture: ComponentFixture<SubmitModalComponent>;
+describe('PrintLayoutComponent', () => {
+  let component: PrintLayoutComponent;
+  let fixture: ComponentFixture<PrintLayoutComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SubmitModalComponent ]
+      declarations: [ PrintLayoutComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SubmitModalComponent);
+    fixture = TestBed.createComponent(PrintLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,11 +1,9 @@
-import { AuthService } from './../../../services/auth.service';
-
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { CookieService } from 'ngx-cookie-service';
 
 import { Order } from '../../shared/order';
 import { packList } from '../../shared/packaging';
+import { PrintService } from '../../../services/print.service';
 
 @Component({
   selector: 'order-table',
@@ -25,10 +23,10 @@ export class TableComponent implements OnInit {
   public vendorIndex;
   public lastOrder = 0;
 
-  constructor(private cookieService: CookieService, private auth: AuthService) { }
+  constructor(public printService: PrintService) { }
 
   ngOnInit() {
-   
+   //console.log(this.itemList)
   }
 
   @Output()
@@ -49,7 +47,7 @@ export class TableComponent implements OnInit {
     let vendorName: string;
     let vendorIndex;
     let data;
-    //console.log(vendorId, itemId, itemIndex, pack, quantity)
+    ////console.log(vendorId, itemId, itemIndex, pack, quantity)
     for(let v = 0; v < this.vendors.length; v++){//getting vendorName
       if(this.vendors[v].id == vendorId){
         vendorName = this.vendors[v].name;
@@ -65,7 +63,7 @@ export class TableComponent implements OnInit {
     }else{
       if(quantity != 0){
         this.updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex);
-        //console.log(vendorIndex)
+        ////console.log(vendorIndex)
       }
       
 
@@ -78,14 +76,14 @@ export class TableComponent implements OnInit {
  
 
   increase(itemInd){
-    //console.log(itemInd)
+    ////console.log(itemInd)
     this.itemList[itemInd]['quantity']++;
-    //console.log(this.itemList[itemInd])
+    ////console.log(this.itemList[itemInd])
     this.updateOrder(this.itemList[itemInd]['id'], this.itemList[itemInd]['pack'], this.itemList[itemInd]['vendorId'], this.itemList[itemInd]['quantity'], this.itemList[itemInd]['name'])
   }
 
   decrease(itemInd){
-    //console.log(itemInd)
+    ////console.log(itemInd)
     if(this.itemList[itemInd]['quantity'] > 0){
       this.itemList[itemInd]['quantity']--;
       this.updateOrder(this.itemList[itemInd]['id'], this.itemList[itemInd]['pack'], this.itemList[itemInd]['vendorId'], this.itemList[itemInd]['quantity'], this.itemList[itemInd]['name']);      
@@ -97,7 +95,7 @@ export class TableComponent implements OnInit {
 updateOrder(itemId, pack, vendorId, quantity, itemName?){ //updateOrder needed  only to keep order in storage 
   if(!this.onUpdate){ //updating new order
     
-    //console.log(itemId, pack, vendorId, quantity)
+    ////console.log(itemId, pack, vendorId, quantity)
     let i = 0;
     
     if(this.order.length > 0){
@@ -140,18 +138,18 @@ updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex?){
   if( index == -1){
     this.vendors[this.vendorIndex]['changesMap'].push(itemId);
     this.vendors[this.vendorIndex]['changes'].push({pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName});
-     //console.log(this.vendors)
+     ////console.log(this.vendors)
   }else{
     this.vendors[this.vendorIndex]['changes'][index] = {pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName};
   }
 
   if(vendorIndex >= 0){//on vendor change
-    console.log(vendorIndex)
+    //console.log(vendorIndex)
     let index = this.vendors[vendorIndex]['changesMap'].indexOf(itemId)
     if( index == -1){
       this.vendors[vendorIndex]['changesMap'].push(itemId);
       this.vendors[vendorIndex]['changes'].push({pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName});
-       console.log(this.vendors)
+       //console.log(this.vendors)
     }else{
       this.vendors[vendorIndex]['changes'][index] = {pack: pack, vendorId: vendorId, quantity: quantity, itemId: itemId, name: itemName};
     }
@@ -161,7 +159,7 @@ updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex?){
     if( index == -1){
       this.vendors[this.vendorIndex]['changesMap'].push(itemId);
       this.vendors[this.vendorIndex]['changes'].push({pack: pack, vendorId: prevVendorId, quantity: 0, itemId: itemId, name: itemName});
-       //console.log(this.vendors)
+       ////console.log(this.vendors)
     }else{
       this.vendors[this.vendorIndex]['changes'][index] = {pack: pack, vendorId: prevVendorId, quantity: 0, itemId: itemId, name: itemName};
     }
@@ -171,12 +169,16 @@ updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex?){
 
 saveChangesInLocalStorage(){
   let user = localStorage.getItem('evendorUser');
-  console.log(user)
+  //console.log(user)
     let order = JSON.stringify(this.order);
     localStorage.setItem('order' + user, order);
   }
 
-
+  onPrintInvoice() {
+    this.printService.isPrinting = true;
+    this.printService.itemsList = this.itemList;
+    this.printService.printDocument();
+  }
 
 
 }

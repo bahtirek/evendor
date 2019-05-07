@@ -10,6 +10,8 @@ export class SpinnerComponent implements OnInit {
 
   constructor() { }
 
+  spinner;
+
   ngOnInit() {
   }
 

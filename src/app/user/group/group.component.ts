@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 
-import { Vendor } from '../shared/vendor';
 import { modal } from '../shared/modal';
 import { url } from '../shared/url';
 import { Group } from '../shared/group';
@@ -28,10 +27,10 @@ export class GroupComponent implements OnInit {
     .subscribe(
       result=>{
         this.groups = result;
-        console.log(this.groups)
+        //console.log(this.groups)
       },
       error=>{
-        console.log(error)
+        //console.log(error)
       }
     );
   }
@@ -42,7 +41,7 @@ export class GroupComponent implements OnInit {
   }
 
   save(){
-    console.log(this.editGroup);
+    //console.log(this.editGroup);
     if(this.editGroup !== ''){//if group is exist then update
       this.http.put(this.url.group + '/' + this.groups[this.editGroup]['id'] + '?token=' + this.auth.token, {name: this.groupName})
         .subscribe(
@@ -68,14 +67,14 @@ export class GroupComponent implements OnInit {
               this.groupName = '';
               this.editGroup = '';
             }else{
-              console.log(this.groupName)
+              //console.log(this.groupName)
               this.modal.text = "Couldn't save the group";
               this.modal.errDisplay = "block";
             }
           }, 
           error=>{
             
-            console.log(error)
+            //console.log(error)
             this.modal.text = "Couldn't save the group";
             this.modal.errDisplay = "block";
           }

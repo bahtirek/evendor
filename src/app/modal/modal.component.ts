@@ -1,5 +1,6 @@
-import { Router } from '@angular/router';
+
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'modal',
@@ -13,7 +14,7 @@ export class ModalComponent implements OnInit {
   public vendors;
   public note = {name: '', note:'', vendorInd: null, itemInd: null};
 
-  constructor(private router: Router) { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
   }
@@ -30,7 +31,7 @@ export class ModalComponent implements OnInit {
   delete: EventEmitter<null> = new EventEmitter();
   deleteOnModal(){
     this.delete.emit();
-    console.log('delete')
+    //console.log('delete')
   }
   
   @Output()
@@ -48,6 +49,21 @@ export class ModalComponent implements OnInit {
 
   submit(){
     this.submitVendors.emit(this.vendors);
+  }
+
+@Output()
+combineCashedOrder: EventEmitter<any> = new EventEmitter;
+
+  combineCashed(){
+    this.combineCashedOrder.emit();
+  }
+
+  @Output()
+  deleteCashedOrder: EventEmitter<any> = new EventEmitter;
+
+  deleteCashed(){
+    this.deleteCashedOrder.emit();
+    this.modal.cashed = 'none';
   }
 
 }

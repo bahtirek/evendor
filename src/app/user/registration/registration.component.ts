@@ -19,11 +19,11 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSignup(form: NgForm){
-    console.log(form.value)
+    //console.log(form.value)
     let userName = form.value.username;
     let email = form.value.email;
     let password = form.value.password;
-    console.log(email)
+    //console.log(email)
     this.http.post(
       this.url.signup, 
       {name: userName, email: email, password: password}, 
@@ -31,11 +31,11 @@ export class RegistrationComponent implements OnInit {
     )
     .subscribe(
       result=>{
-        console.log(result)
+        //console.log(result)
         this.router.navigate(['/home']);
       },
       error=>{
-        console.log(error)
+        //console.log(error)
       }
     );
     

@@ -11,7 +11,7 @@ export class CustomItemComponent implements OnInit {
   public customItemName = "";
   public vendorVal = "";
   public error = true;
-  
+  vendors;
   constructor() { }
 
   ngOnInit() {

@@ -1,19 +1,15 @@
 import { Router } from '@angular/router';
-import { Headers } from '@angular/http';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
+import { tokenNotExpired } from 'angular2-jwt';
 
-import { url } from '../user/shared/url'
 
 
 @Injectable()
 export class AuthService {
 
-  private url = url;
   public token;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor( private router: Router) { }
 
 
   setToken(token, user){
@@ -35,5 +31,10 @@ export class AuthService {
     this.token = localStorage.getItem('evendorToken');
   
     return tokenNotExpired();
+  }
+
+  userEmail(){
+    return localStorage.getItem('evendorUser');
+    
   }
 }

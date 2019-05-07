@@ -35,7 +35,7 @@ export class PriceComponent implements OnInit {
     this.http.get<any>(this.url.reviewprice + '?token=' + this.auth.token)
     .subscribe(
       result=>{
-        console.log(result)
+        //console.log(result)
         if(result.error == 'norequest'){
           this.priceRequestMessage = "You don't have any price requests";
         }else{
@@ -44,11 +44,11 @@ export class PriceComponent implements OnInit {
         
       },
       error=>{
-        console.log(error)
+        //console.log(error)
         if(error.status == 0){
-          console.log('no internet connection')
+          //console.log('no internet connection')
         }else{
-          console.log("Something went wrong")
+          //console.log("Something went wrong")
         }
         
       }
@@ -57,13 +57,13 @@ export class PriceComponent implements OnInit {
 
 
   increase(itemInd){
-    console.log(itemInd)
+    //console.log(itemInd)
     this.itemsList[itemInd]['quantity']++;
-    console.log(this.itemsList[itemInd])
+    //console.log(this.itemsList[itemInd])
   }
 
   decrease(itemInd){
-    console.log(itemInd)
+    //console.log(itemInd)
     if(this.itemsList[itemInd]['quantity'] > 0){
       this.itemsList[itemInd]['quantity']--;
     }
@@ -76,7 +76,7 @@ export class PriceComponent implements OnInit {
         this.itemsList[itemIndex]['vendorName'] = vendor.name;
       }
     });
-    console.log(this.itemsList)
+    //console.log(this.itemsList)
   }
 
   suspend() {
@@ -88,12 +88,12 @@ export class PriceComponent implements OnInit {
         this.http.put(this.url.updatesuspend + '?token=' + this.auth.token , {order: suspendedList})
         .subscribe(
           result=>{
-            console.log(result)
+            //console.log(result)
             this.spinner = 'none';
             this.router.navigate(["user/neworder"]);
             },
           error=>{
-            console.log(error)
+            //console.log(error)
           }
         );
       }

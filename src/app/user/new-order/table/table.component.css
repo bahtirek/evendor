@@ -32,3 +32,7 @@ p{
     padding-right: 0.6rem;
 }
 
+input[type="number"] {
+  width: 100px;
+}
+

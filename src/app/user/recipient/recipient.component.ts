@@ -5,7 +5,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Vendor } from '../shared/vendor'; 
 import { modal } from '../shared/modal'; 
-import { CRUD } from '../shared/crud';
 import { url } from '../shared/url';
 
 @Component({
@@ -27,24 +26,18 @@ export class RecipientComponent implements OnInit {
   private url = url;
   
 
-  private vendorUrl = "http://localhost/evendorAPI/vendor.php";
-  private recipientUrl = "http://localhost/evendorAPI/recipient.php";
   private token = this.auth.token;
 
-  constructor(private http: HttpClient, private auth: AuthService, private crud: CRUD) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   ngOnInit() {
     this.http.get<any>(this.url.vendors + '?token=' + this.token)
     .subscribe(
       result=>{
-        console.log(result)
         this.vendors = result;
-        this.vendors.forEach(vendor => {
-          console.log(vendor);
-        });
       },
       error=>{
-        console.log(error)
+        ////console.log(error)
       }
     );
 
@@ -57,10 +50,9 @@ export class RecipientComponent implements OnInit {
     .subscribe(
       result=>{
         this.recipients = result;
-        console.log(result)
       },
       error=>{
-        console.log(error)
+        ////console.log(error)
       }
     );
   }
@@ -72,7 +64,7 @@ export class RecipientComponent implements OnInit {
     this.http.delete(this.url.recipient + '/' + this.agreeToRemoveData.id + '?token=' + this.token)
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           if(result === 1){
             this.recipients.splice(this.agreeToRemoveData.index, 1);
             this.agreeToRemoveData = {};
@@ -84,7 +76,7 @@ export class RecipientComponent implements OnInit {
           }
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       );
 
@@ -92,7 +84,7 @@ export class RecipientComponent implements OnInit {
 
   removeRecipient(id, index){
     this.agreeToRemoveData = {id: id, index: index};
-    console.log(this.agreeToRemoveData)
+    //console.log(this.agreeToRemoveData)
     this.modal.text2 = this.recipients[index]['name'];
     this.modal.agreementDisplay = "block";
    }
@@ -103,6 +95,7 @@ export class RecipientComponent implements OnInit {
   ///////////////////////// Save new recipient or Update exist
 
   saveRecipient(data){
+    console.log(data)
     if(data.id !== undefined || data.id > 0){//if id exist update recipient else create recipient
       this.http.put(this.url.recipient + '/' + data.id + '?token=' + this.token, data)
       .subscribe(
@@ -112,7 +105,7 @@ export class RecipientComponent implements OnInit {
           }
         },
         error=>{
-          console.log(error);
+          //console.log(error);
         }
       );
       
@@ -125,7 +118,7 @@ export class RecipientComponent implements OnInit {
             }
           },
           error=>{
-            console.log(error);
+            //console.log(error);
           }
         );
        this.recipient = new Recipient("", "", "", this.dummyVendors);
@@ -135,42 +128,6 @@ export class RecipientComponent implements OnInit {
   }
 
 
-
-  saveRecipient1(data){
-    console.log(data)
-    if(data.id !== undefined || data.id > 0){//if id exist update recipient else create recipient
-      this.crud.update(this.recipientUrl, data)
-      .subscribe(
-        result=>{
-          if(result === 1){
-            this.recipients[data.index] = data;
-            this.recipient = new Recipient("", "", "", this.dummyVendors);
-          }else{
-            this.modal.text = "Couldn't update recipient";
-            this.modal.errDisplay = "block";
-          }
-        },
-        error=>{
-          console.log(error);
-        }
-    );
-      
-    }else{
-      this.crud.create(this.recipientUrl, data)
-      .subscribe(result=>{
-        if(result !== 0 && result > 0){
-          data.id = result;
-          this.recipients.push(data);
-        }else{
-          this.modal.text = "Couldn't add recipient";
-          this.modal.errDisplay = "block";
-        }
-      });
-       this.recipient = new Recipient("", "", "", this.dummyVendors);
-    }
-    this.add = false;
-    this.edit = false;
-  }
 
    ///////////////////////// End of Save new recipient or Update exist
 

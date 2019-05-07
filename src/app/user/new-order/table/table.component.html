@@ -33,19 +33,22 @@
               </select>
               <div class="input-group-addon" (click)="increase(itemInd)">+</div>
                 </div>
+               <!--  <div class="input-group">
+                  <input type="number" name="quantity" class="form-control form-control-sm"  [(ngModel)]="item.quantity" (change)="updateOrder(item.id, item.pack, item.vendorId, item.quantity, item.name)" min="0" value="0" ngModel>
+                </div> -->
                 </div>
                 <div class="col-xs-3">
                   <select class="form-control form-control-sm ml" name="item.pack" [(ngModel)]="item.pack"  (change)="updateOrder(item.id, item.pack, item.vendorId, item.quantity, item.name)" ngModel>
                         <option *ngFor="let pack of packList" >{{pack.type}}</option>
                 </select>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-3 h-menu">
                   <select class="form-control form-control-sm" (change)="change(newVendor.value, item.id, itemInd,  item.pack, item.quantity, item.name)" #newVendor ngModel>
                     <option value="" selected>{{item.vendorName}}</option>
                     <option *ngFor="let vendOpt of vendors; let optInd=index" value="{{vendOpt.id}}">{{vendOpt.name}}</option>
                   </select>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-3 h-menu" >
                   <div class="form-check" *ngIf="!onUpdate">
                     <label class="form-check-label text-muted">
                         <input class="form-check-input ml" name="comp" type="checkbox" value="" [(ngModel)]="item.compare" (change)="emitCheckCompare()" ngModel>
@@ -61,3 +64,4 @@
       </tr>
     </tbody>
   </table>
+  <button (click)="onPrintInvoice()" class="btn btn-link mr-5">Print List</button>

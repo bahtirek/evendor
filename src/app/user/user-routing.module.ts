@@ -4,18 +4,19 @@ import { AuthGuard } from './../services/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserComponent } from "./user.component";
-import { VendorComponent, ItemListComponent,  NewOrderComponent,  LocationsComponent, AccountComponent, OrderHistoryComponent, RecipientComponent, GroupComponent, RegistrationComponent} from './index';
+import { VendorComponent, ItemListComponent,  NewOrderComponent, AccountComponent, OrderHistoryComponent, RecipientComponent, GroupComponent} from './index';
+import { PrintLayoutComponent } from './print-layout/print-layout.component';
 
 
 const routes: Routes = [
   
-  {
+/*   {
     path: "",
     redirectTo: "/user",
     pathMatch: "full"
-  },
+  }, */
   {
-    path: "user",
+    path: "",
     component: UserComponent,
     canActivate: [AuthGuard],
     children:[
@@ -63,8 +64,12 @@ const routes: Routes = [
           {
             path: "price",
             component: PriceComponent
+          },
+          { 
+            path: 'print',
+            component: PrintLayoutComponent
           }
-        ]
+         ]
       }
       
     ]

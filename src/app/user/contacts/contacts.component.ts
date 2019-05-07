@@ -75,7 +75,7 @@ export class ContactsComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    console.log('hello');
+    //console.log('hello');
   }
 
   @Output()
@@ -172,7 +172,7 @@ export class ContactsComponent implements OnInit {
           this.edited.emit(data)
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       ); 
     
@@ -180,7 +180,7 @@ export class ContactsComponent implements OnInit {
 
   numberOnly(event){
     let keyCode = event.keyCode;
-    console.log(keyCode)
+    //console.log(keyCode)
     if(keyCode > 47 && keyCode < 58){
       return true;
     }else{

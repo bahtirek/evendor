@@ -1,4 +1,4 @@
-import{ AbstractControl, ValidationErrors } from '@angular/forms';
+import{ AbstractControl} from '@angular/forms';
 
 export function emptyStringValidator(control: AbstractControl): { [key: string]: any } {
         if(!control.value) return null;

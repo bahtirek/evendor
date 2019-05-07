@@ -1,15 +1,9 @@
 import { modal } from './../shared/modal';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Router } from "@angular/router"
 
-import { CookieService } from 'ngx-cookie-service';
-import { ShowOrderComponent } from '../show-order/show-order.component';
 
-//import { packList } from '../shared/packaging';
 import { Order } from '../shared/order';
-import { Vendor } from '../shared/vendor';
-import { userConfig } from '../shared/userConfig';
 import { url } from '../shared/url';
 import { Group } from '../shared/group';
 import { AuthService } from '../../services/auth.service';
@@ -22,16 +16,10 @@ import { AuthService } from '../../services/auth.service';
 export class NewOrderComponent implements OnInit {
   
   public vendors: any;
-  //public packList = packList;
-  //public userConfig = userConfig;
-  //public sortBy = this.userConfig.orderList;
   public itemList: any = [];
-  //public itemListByVendor: any = [];
-  //public itemListByGroup: any = [];
   public itemListBy: any = [];
-  public by: string = 'byOrder';
+  public by: string = 'byVendor';
   public order: Order[] = [];//order list to save in cash
-  //public cookieValue = 'UNKNOWN';
   private url = url;
   private groups: Group[];
   public isReview = false;
@@ -44,11 +32,10 @@ export class NewOrderComponent implements OnInit {
   public showPriceButton = false;
   public showSubmitModal = 'none';
   public vendorsForSubmitModal = [];
-  public user = localStorage.getItem('evendorUser');
-  //public byWhat = 'byOrder';
+  public orderFromCash: any;
   private token = new HttpParams().set('token', this.auth.token);
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router, private auth: AuthService) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   ngOnInit() {
     this.http.get(this.url.vendors + '?token=' + this.auth.token) //getting vendors
@@ -71,20 +58,20 @@ export class NewOrderComponent implements OnInit {
                     result => { // itemList subscribe
                       this.itemList = result;
                       console.log(this.itemList)
+                      this.arrange(this.by);
                     },
                     error => {
                       //console.log(error)
                     },
                     () => { //get exist unfinished order from cookie
+                      this.orderFromCash = JSON.parse(localStorage.getItem('order' + this.auth.userEmail()));
                       this.getSuspendedOrder();
                     }
                   ); //itemList subscribe
               }
             ); //group subscribe
-          let v = 0
           for(let vendor of this.vendors){// adding vendorNote property to vendors object
-            this.vendors[v]['vendorNote'] = '';
-            v++
+           vendor.vendorNote = '';
           }
         }
       );//vendor subscribe
@@ -148,10 +135,7 @@ export class NewOrderComponent implements OnInit {
           },
           error => {},
           ()=>{
-            //this.cookieService.delete('order');
-            localStorage.removeItem('order');
-            //localStorage.setItem('order', JSON.stringify(this.order));
-            this.deleteSuspenedOrder();
+            localStorage.removeItem('order' + this.auth.userEmail());
           }
         );
     }
@@ -198,26 +182,24 @@ export class NewOrderComponent implements OnInit {
 
 
   getSuspendedOrder(){
+    
     this.http.get<any>(this.url.suspend + '?token=' + this.auth.token)
       .subscribe(
         result=>{
-          //console.log(result)
-          if(result.length == 0){
-            let orderfromCash = JSON.parse(localStorage.getItem('order' + this.user));
-            if(orderfromCash){
-              //console.log(orderfromCash)
-              this.suspendedOrder = orderfromCash;
+          if(result.length == 0){//if there is not suspended order then load from cash
+            if(this.orderFromCash){
+              this.suspendedOrder = this.orderFromCash;
+              this.loadSuspendedOrder();
+            }
+          }else{
+            this.suspendedOrder = result;
+            if(this.orderFromCash){
+              this.modal.cashed = 'block';
+            }else{
               this.loadSuspendedOrder();
             }
             
-          }else{
-            this.modal.date = result[0]['date'];
-            //this.modal.suspendDisplay = 'block';
-            this.suspendedOrder = result;
-            this.loadSuspendedOrder();
-            localStorage.setItem('order' + this.user, JSON.stringify(result));
           }
-          //console.log(result)
         },
         error=>{
           //console.log(error)
@@ -226,7 +208,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   loadSuspendedOrder(){
-      if(this.suspendedOrder != null) this.order = this.suspendedOrder;
+    if(this.suspendedOrder != null) this.order = this.suspendedOrder;
           if(this.order){
             for (let item of this.order) { //going thru object from cookie
               for(let i = 0; i < this.vendors.length; i++){//for loop to assign vendor name
@@ -247,8 +229,8 @@ export class NewOrderComponent implements OnInit {
               }
             }
           }
-          this.modal.suspendDisplay = 'none';
-          localStorage.removeItem('order' + this.user);     
+          this.modal.cashed = 'none';
+          //localStorage.removeItem('order' + this.auth.userEmail());     
   }
 
   deleteSuspenedOrder(){
@@ -283,7 +265,6 @@ compare(){
     }
     i++;
     if (i == this.itemList.length) { //if it last loop of parent forloop(for (let item of this.itemList)) submit order
-      console.log(compare)
       this.http.post<any>(this.url.compare + '?token=' + this.auth.token, {compare: compare})
         .subscribe(
           result => {
@@ -297,7 +278,6 @@ compare(){
             this.spinner = "none";
           },
           error => {
-            console.log(error)
             this.spinner = "none";
           },
         );
@@ -413,9 +393,6 @@ submitOrder(vendors){
             this.spinner = "none";
           }
         ); 
-        //console.log(newOrder)
-        //this.spinner = 'none';
-         
       }
   }
   
@@ -445,27 +422,27 @@ suspend() {
 }
 
 submitSuspendedOrder(suspendedOrder) {
-  console.log(suspendedOrder)
+  //console.log(suspendedOrder)
   this.http.post(this.url.suspend + '?token=' + this.auth.token, {order: suspendedOrder})
   .subscribe(
     result => {
       //console.log(result)
       this.spinner = "none";
-      localStorage.removeItem('order');
+      localStorage.removeItem('order' + this.auth.userEmail());
     },
     error => {
       //console.log(error)
       this.spinner = "none";
     },
     ()=>{
-      localStorage.removeItem("order" + this.user);
+      localStorage.removeItem('order' + this.auth.userEmail());
     }
   );
 }
 
 sortBy(sort){
-  console.log(this.by)
-  console.log(this.itemListBy)
+  //console.log(this.by)
+  //console.log(this.itemList)
   if(sort == 'az'){
     this.itemList.sort(function(a,b){
       return a.name.localeCompare(b.name);
@@ -486,17 +463,31 @@ sortBy(sort){
       var d2 = new Date(a.date).getTime();
       return  d2 - d1;
     });
-  }else{
+  }else if(sort === 'most'){
     this.itemList.sort(function(a, b) { 
       return b.ordercount - a.ordercount
+    });
+  } else {
+    this.itemList.sort(function(a, b) { 
+      return a.id - b.id
     });
   }
   if(this.by != 'byOrder'){
     this.arrange(this.by)
   }
-  
 }
 
+combineCashedOrder(){
+  //console.log(this.suspendedOrder)
+  //console.log(this.orderFromCash)
+  this.suspendedOrder = this.orderFromCash;
+  this.loadSuspendedOrder();
+  this.modal.cashed = 'none';
+}
 
+deleteCashedOrder(){
+  localStorage.removeItem('order' + this.auth.userEmail());
+  this.loadSuspendedOrder();
+}
 
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, EventEmitter, Output} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { CRUD } from '../../shared/crud';
 
 import { packList } from '../../shared/packaging';
 import { url } from '../../shared/url';
@@ -26,10 +25,10 @@ export class NewListComponent implements OnInit {
   private token = this.token;
   public emailToCopy = ''
   public emailToCopyMessage = '';
-  constructor(private crud: CRUD, private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    console.log(packList)
+    console.log(this.family)
 
     this.http.get<any>(this.url.useritems + '?token=' + this.token)
       .subscribe(

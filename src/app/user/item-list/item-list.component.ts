@@ -1,10 +1,9 @@
 import { AuthService } from './../../services/auth.service';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 
 import { NewListComponent } from './new-list/new-list.component' //Needed for @viewChild
 
-import { CRUD } from '../shared/crud';
 
 
 import { Item } from '../shared/item';
@@ -13,7 +12,6 @@ import { family } from '../shared/family';
 import { modal } from '../shared/modal';
 import { url } from '../shared/url';
 import { packList } from '../shared/packaging';
-import { Group } from '../shared/group';
 import { allItems } from '../shared/allitems';
 
 
@@ -33,18 +31,12 @@ export class ItemListComponent implements OnInit {
   public modal = modal;
   public userId = 1;
   public note = {name: '', note:'', vendorInd: null, itemInd: null}
-  private mainItemsUrl='http://localhost/evendorAPI/itemservice.php';
-  private itemNoteUrl='http://localhost/evendorAPI/itemnote.php';
-  private customItemUrl = "http://localhost/evendorAPI/customItem.php";
-  private userListUrl = "http://localhost/evendorAPI/userlist.php";
-  private vendorUrl = "http://localhost/evendorAPI/vendor.php";
   private url = url;
-  private groups: Group[] = [];
   public packList = packList;
-  private token = this.auth.token;
+  public token = this.auth.token;
 
   
-  constructor(private crud: CRUD, private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
   ngOnInit() {
     this.http.get<any>(this.url.vendors + '?token=' + this.token)
     .subscribe(
@@ -56,7 +48,7 @@ export class ItemListComponent implements OnInit {
         console.log(error)
       }
     );
-  
+  console.log(this.family)
   }// END of NgOnInit
     
 

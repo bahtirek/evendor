@@ -1,0 +1,21 @@
+table { 
+    page-break-inside:auto 
+}
+tr { 
+    page-break-inside:avoid; page-break-after:auto 
+}
+
+.item-quantity{
+    width: 60px;
+}
+
+
+.right-brd{
+    border-right: 1px solid grey;
+}
+
+.right-brd-d{
+    border-right: 1px dashed grey;
+}
+
+

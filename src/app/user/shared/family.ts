@@ -13,7 +13,8 @@ class Family{
     new Family('Spices, Dressing, Sauce', 'spi'),
     new Family('Janitorial', 'jan'),
     new Family('Flour, Bread', 'flo'),
-    new Family('Produce, canned fruit&veggie', 'pro'),
+    new Family('Produce, canned fruit & veggie', 'pro'),
     new Family('Other', 'oth'),
+    new Family('Dessert', 'des'),
     new Family('Custom', 'cus')
 ]

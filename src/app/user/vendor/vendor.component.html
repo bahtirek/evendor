@@ -3,12 +3,13 @@
    
     <div class="col-lg-6 col-md-10 col-sm-8">
         <h4>Add new vendor</h4> 
-      <add-vendor (add)="addVendor($event)" [vendorName]="vendorName"></add-vendor>
+      <!-- <add-vendor (add)="addVendor($event)" [vendorName]="vendorName"></add-vendor> -->
+      <add-vendor (add)="addVendor($event)"></add-vendor>
       <hr class="mb-0">
       <h4>Vendors list</h4>
     <div *ngIf="vendors">
         <div *ngFor="let vendor of vendors; index as i">
-            <show-vendor [vendor]="vendor" (save)="updateVendor($event)" (remove)="removeVendor($event, i)"></show-vendor>
+            <show-vendor [vendor]="vendor" (save)="updateVendor($event)" (remove)="removeVendor($event)"></show-vendor>
         </div>
     </div>
     </div>

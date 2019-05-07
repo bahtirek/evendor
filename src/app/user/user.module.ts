@@ -1,4 +1,3 @@
-import { SignupFormComponent } from './../signup-form/signup-form.component';
 
 import { TextMaskModule } from 'angular2-text-mask';
 import { NgModule } from '@angular/core';
@@ -15,13 +14,15 @@ import { CustomItemComponent } from './item-list/custom-item/custom-item.compone
 import { ModalComponent } from '../modal/modal.component';
 import { GroupComponent } from './group/group.component';
 import { TableComponent } from './new-order/table/table.component';
-import { SpinnerComponent } from '../spinner/spinner.component';
 import { ShowOrderComponent } from './show-order/show-order.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MainComponent } from './main/main.component';
 import { PriceComponent } from './price/price.component';
-//import { SubmitModalComponent } from './new-order/submit-modal/submit-modal.component';
+import { SpinnerModule } from '../spinner/spinner.module';
+import { SignupFormModule } from 'app/signup-form/signup-form.nodule';
+import { UserComponent } from './user.component';
+import { PrintLayoutComponent } from './print-layout/print-layout.component';
 
 
 
@@ -31,11 +32,15 @@ import { PriceComponent } from './price/price.component';
     UserRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    TextMaskModule
+    TextMaskModule,
+    SpinnerModule,
+    SignupFormModule
   ],
   exports: [
-    SignupFormComponent
+    
   ],
-  declarations: [VendorComponent, SignupFormComponent, ItemListComponent, NewOrderComponent, LocationsComponent, AccountComponent, OrderHistoryComponent, AddVendorComponent, ShowVendorComponent, RecipientComponent, AddRecipientComponent, MainListComponent, NewListComponent, CustomItemComponent, ModalComponent, GroupComponent, TableComponent, SpinnerComponent, ShowOrderComponent, ContactsComponent, RegistrationComponent, MainComponent, PriceComponent]
+  providers: [
+  ],
+  declarations: [VendorComponent, UserComponent, ItemListComponent, NewOrderComponent, LocationsComponent, AccountComponent, OrderHistoryComponent, AddVendorComponent, ShowVendorComponent, RecipientComponent, AddRecipientComponent, MainListComponent, NewListComponent, CustomItemComponent, ModalComponent, GroupComponent, TableComponent, ShowOrderComponent, ContactsComponent, RegistrationComponent, MainComponent, PriceComponent, PrintLayoutComponent]
 })
 export class UserModule { }

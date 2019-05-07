@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, SimpleChanges, Output, EventEmitter } from '@angular/core';
 
 
 
@@ -12,6 +12,7 @@ export class ShowOrderComponent implements OnInit {
 
   public order;
   public orderByVendor = { items: [],  note: '',  name: '' };
+  showUpdateButton;
 
   constructor() {}
 
@@ -19,7 +20,7 @@ export class ShowOrderComponent implements OnInit {
     this.toggleVendors(0);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.toggleVendors(0);
   }
 

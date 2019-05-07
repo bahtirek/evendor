@@ -39,16 +39,16 @@ export class ShowVendorComponent implements OnInit {
   }
 
   edit(name){
-    console.log(this.vendor)
-    console.log(this.shopList)
+    //console.log(this.vendor)
+    //console.log(this.shopList)
     this.editVendor = true;
     this.vendorName = name;
     if(this.vendor.id == this.vendor.shopList){
       this.shopList = true;
-      console.log(this.shopList)
+      //console.log(this.shopList)
     }else{
       this.shopList == false;
-      console.log(this.shopList)
+      //console.log(this.shopList)
     }
   }
 

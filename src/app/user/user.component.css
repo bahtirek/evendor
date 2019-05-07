@@ -28,3 +28,14 @@ li.nav-item:hover {
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) { }
+
+@media print {
+    .isPrinting > * { display: none; }
+    .isPrinting app-print-layout { display: block; }
+    .container {
+        width: 800px;
+    }
+
+
+
+  }

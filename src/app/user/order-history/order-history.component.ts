@@ -1,5 +1,4 @@
 import { Group } from './../shared/group';
-import { Vendor } from './../shared/vendor';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams} from '@angular/common/http';
@@ -22,7 +21,7 @@ export class OrderHistoryComponent implements OnInit {
   public years = [];
   public date = {month: '01', year: '2016'};
   public modal = modal;
-  private months = month;
+  public months = month;
   public updatableOrder;
   public showUpdateButton = false;
   public showUpdateTable = false;
@@ -43,16 +42,16 @@ export class OrderHistoryComponent implements OnInit {
     this.http.get(this.url.lastorders, {params: this.token})
       .subscribe(
         result=>{
-          //console.log(result);
+          ////console.log(result);
           this.history = result;
           if(this.history[0]){
             this.updatableOrder = this.history[0]['id'];
-            //console.log(this.updatableOrder)
+            ////console.log(this.updatableOrder)
           }
           
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         },
         ()=>{}
       );
@@ -74,7 +73,7 @@ export class OrderHistoryComponent implements OnInit {
     this.http.get<any>(this.url.order + '/' + id, {params: this.token})
       .subscribe(
         result=>{
-          //console.log(result)
+          ////console.log(result)
           this.order = result;
           for(let vendor of this.order){
             for(let item of vendor.items){
@@ -99,7 +98,7 @@ export class OrderHistoryComponent implements OnInit {
                 }
               }
             }
-            //console.log(vendor)
+            ////console.log(vendor)
           }
 
 
@@ -112,7 +111,7 @@ export class OrderHistoryComponent implements OnInit {
           //this.showOrder = true;
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       );
   }
@@ -123,12 +122,12 @@ export class OrderHistoryComponent implements OnInit {
     this.toggleView('');
     //this.showOrder = false;
     let date = this.date.year + '-' + this.date.month;
-    console.log(date)
+    //console.log(date)
     let params = new HttpParams().set('date', date).set('token', this.auth.token);
     this.http.get<any[]>(this.url.orders, {params: params, responseType: 'json'})
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           if(result == null){
             this.modal.alertDisplay = 'block';
             this.modal.text2 = 'No orders placed on this period of time';
@@ -138,7 +137,7 @@ export class OrderHistoryComponent implements OnInit {
           
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       );
   }
@@ -149,7 +148,7 @@ export class OrderHistoryComponent implements OnInit {
     this.http.get<any[]>(this.url.orderlistforupdate + '?token=' + this.auth.token)
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           this.vendors = [];
           for(let vendor of result){
             this.vendors.push({name: vendor.name, id: vendor.id, changes: [], changesMap: [], items: [], note: []});
@@ -157,7 +156,7 @@ export class OrderHistoryComponent implements OnInit {
           this.itemList = result;
           },
         error=>{
-          console.log(error)
+          //console.log(error)
         },
         ()=>{
           if(this.orderToUpdate){
@@ -169,7 +168,7 @@ export class OrderHistoryComponent implements OnInit {
                     if(itemIndex > -1){//elsi est v ordere item togda updatem quantity v litemslist
                       if(orderItem.updates.length > 0){// if item was updated
                         let upItem = orderItem.updates[orderItem.updates.length - 1];
-                       //console.log(upItem)
+                       ////console.log(upItem)
                         listVendor.items[itemIndex].quantity = upItem.quantity;
                         listVendor.items[itemIndex].pack = upItem.pack;
                       }else{
@@ -179,7 +178,7 @@ export class OrderHistoryComponent implements OnInit {
                     }else{//elsi net v ordere item togda pushaem item
                       if(orderItem.updates.length > 0){// if item was updated
                         let upItem = orderItem.updates[orderItem.updates.length - 1];
-                        //console.log(upItem)
+                        ////console.log(upItem)
                         orderItem.quantity = upItem.quantity;
                         orderItem.pack = upItem.pack;
                       }
@@ -218,14 +217,14 @@ export class OrderHistoryComponent implements OnInit {
         vendorOut.note.push({note: vendorOut.vendorNote})
       }
       
-     // console.log(this.vendors)
+     // //console.log(this.vendors)
     }
     this.order = this.vendors;
     this.toggleView('order', 'review') 
     this.showUpdateButton = false;
-    //console.log(this.itemList)
-    //console.log(this.vendors)
-    //console.log(this.orderToUpdate)
+    ////console.log(this.itemList)
+    ////console.log(this.vendors)
+    ////console.log(this.orderToUpdate)
   }
 
   editUpdate(){
@@ -233,7 +232,7 @@ export class OrderHistoryComponent implements OnInit {
       vendorOut.items = [];
     }
     this.toggleView('updateTable');
-    //console.log(this.itemList)
+    ////console.log(this.itemList)
   }
 
   cancelUpdate(){
@@ -241,7 +240,7 @@ export class OrderHistoryComponent implements OnInit {
    }
   
   changeVendor(data) {
-    //console.log(data)
+    ////console.log(data)
     let vendorId = data.vendorId;
     let vendorName = data.vendorName;
     let itemIndex = data.itemIndex;
@@ -271,7 +270,7 @@ export class OrderHistoryComponent implements OnInit {
           note: ''
         });
       }
-      console.log(vendor)
+      //console.log(vendor)
       if(vendor.note && vendor.vendorNote){
         note.push({orderId: this.updatableOrder, note: vendor.vendorNote, vendorId: vendor.id});
       }
@@ -279,16 +278,16 @@ export class OrderHistoryComponent implements OnInit {
       i++;
 
       if(i == this.vendors.length){
-        console.log(newOrder)
+        //console.log(newOrder)
         this.http.put(this.url.orderupdate + '?token=' + this.auth.token , {order: newOrder, orderId: this.updatableOrder, note: note})
           .subscribe(
             result=>{
-              console.log(result)
+              //console.log(result)
               this.spinner = 'none';
               this.toggleView('order');
               },
             error=>{
-              console.log(error)
+              //console.log(error)
             }
           );
       }

@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { NgForm } from '@angular/forms'
 
 import { Recipient } from '../../shared/recipient';
 import { Vendor } from '../../shared/vendor';

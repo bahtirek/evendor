@@ -3,15 +3,16 @@
     <!-- place order component -->
     <div *ngIf="!showOrder">
       <div class="order-buttons text-left">
-        <button type="button" class="btn btn-link" (click)="by='byOrder'">By Order</button>
         <button type="button" class="btn btn-link" (click)="arrange('byVendor')">By Vendor</button>
+        <button type="button" class="btn btn-link" (click)="by='byOrder'">All items</button>
         <button *ngIf="(groups!==undefined && groups.length>0)" type="button" class="btn btn-link" (click)="arrange('byGroup')">By Group</button>
         <label class="sort"> Sort:
         <select name="ordercount" (change)="sortBy(orderCount.value)" #orderCount>
-          <option value="most" selected>Most ordered</option>
-          <option value="least">Least ordered</option>
+          <option value="unsorted" selected>Unsorted</option>
+          <option value="most">Most ordered</option>
+          <!-- <option value="least">Least ordered</option> -->
           <option value="recent">Recent ordered</option>
-          <option value="notrecent">Not Recent ordered</option>
+          <!-- <option value="notrecent">Not Recent ordered</option> -->
           <option value="az">A - Z</option>
         </select>
         </label>
@@ -19,7 +20,7 @@
       <ng-container *ngIf="(by == 'byOrder'); else elseTemplate"><!-- by Order -->
         <div class="card">
           <div class="card-header">
-            <h5 class="link">By order</h5>
+            <h5 class="link">All items</h5>
           </div>
           <div class="card-block">
             <order-table [itemList]="itemList" [vendors]="vendors" [by]="by" [order]="order" [isReview]="isReview" 
@@ -72,7 +73,17 @@
       <show-order *ngIf="showOrder" [order]=recentOrder></show-order>
     </div>
   </div>           
-  <modal (delete)="deleteSuspenedOrder()" (ok)="loadSuspendedOrder()" (submitVendors)= "submitOrder($event)" [modal]="modal" [vendors]="vendorsForSubmitModal"></modal>
+  <modal 
+    (delete)="deleteSuspenedOrder()" 
+    (ok)="loadSuspendedOrder()" 
+    (submitVendors)= "submitOrder($event)"
+    (combineCashedOrder)="combineCashedOrder()" 
+    (deleteCashedOrder)="deleteCashedOrder()" 
+    [modal]="modal" 
+    [vendors]="vendorsForSubmitModal">
+  </modal>
+  
+  
   <spinner [spinner]="spinner"></spinner>
   <!--<submitModal (submit)="submit($event)" (emitSubmitModal)="showSubModal($event)" [showSubmitModal]="showSubmitModal"></submitModal>
   -->

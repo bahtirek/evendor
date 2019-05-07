@@ -53,19 +53,19 @@
     </div>
     
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="isVendor" id ="isVendor1"  [checked]="recipient.salesPerson==1" (change)="isVendor(true)" >
+            <input class="form-check-input" type="radio" name="isVendor" id ="isVendor1"  [checked]="recipient.salesPerson" (change)="isVendor(true)" >
             <label class="form-check-label" for="isVendor1">Yes</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="isVendor" id ="isVendor2"  [checked]="recipient.salesPerson==0" (change)="isVendor(false)" >
+            <input class="form-check-input" type="radio" name="isVendor" id ="isVendor2"  [checked]="!recipient.salesPerson" (change)="isVendor(false)" >
             <label class="form-check-label" for="isVendor2">No</label>
           </div>
        
       
           <div *ngIf="displayVendor">
               <div class="form-check form-check-inline" *ngFor="let vendor of vendors; let vendorIndex=index">
-                  <input class="form-check-input" type="radio"  name="vendor" id ="{{'isVendo' + vendorIndex}}" (change)="vendorRepresent(vendorIndex)" >
-                  <label class="form-check-label" for="{{'isVendo' + vendorIndex}}">{{vendor.name}}</label>
+                  <input class="form-check-input" type="radio"  name="vendor" id ="{{'isVendor' + vendorIndex}}" (change)="vendorRepresent(vendorIndex)" >
+                  <label class="form-check-label" for="{{'isVendor' + vendorIndex}}">{{vendor.name}}</label>
                 </div>
     
           </div>
