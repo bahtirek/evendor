@@ -41,19 +41,19 @@ export class ItemListComponent implements OnInit {
     this.http.get<any>(this.url.vendors + '?token=' + this.token)
     .subscribe(
       result=>{
-        console.log(result)
+        //console.log(result)
         this.vendors = result;
       },
       error=>{
-        console.log(error)
+        //console.log(error)
       }
     );
-  console.log(this.family)
+  //console.log(this.family)
   }// END of NgOnInit
     
 
   
-  @ViewChild(NewListComponent) // Access to child component
+  @ViewChild(NewListComponent, {static: true}) // Access to child component
   list: NewListComponent;
 
   userList(){// geting userList
@@ -68,20 +68,20 @@ export class ItemListComponent implements OnInit {
     this.http.post(this.url.useritem + '?token=' + this.token, {itemId: data.itemId, vendorId: data.vendorId})
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           if(result === true){
             this.allItems[data.familyInd]['items'][data.itemInd]['pack'] = 'Case';
             this.allItems[data.familyInd]['items'][data.itemInd]['groupId'] = 0 ;
             this.userItemsList[data.vendorInd]['items'].push(this.allItems[data.familyInd]['items'][data.itemInd]);// add item to userItemsList
-            console.log(data) 
-            console.log(this.userItemsList) 
-            console.log(this.allItems) 
+            //console.log(data) 
+            //console.log(this.userItemsList) 
+            //console.log(this.allItems) 
             this.allItems[data.familyInd]['items'][data.itemInd]['vendorId'] = this.vendors[data.vendorInd]['id']; //add vendor id to allitems list
             this.allItems[data.familyInd]['items'][data.itemInd]['vendorName'] = this.vendors[data.vendorInd]['name']; //add vendor name to allitems list
           }
         },
         error=>{
-          console.log(error)
+          //console.log(error)
           this.modal.text = "Couldn't add to list";
           this.modal.errDisplay = "block";
         }
@@ -94,16 +94,16 @@ export class ItemListComponent implements OnInit {
 //////////////////////////////////////////////   CUSTOM ITEM 
 
   addCustomItem(data){
-    console.log(data)
+    //console.log(data)
     this.http.post<number>(this.url.customitem + '?token=' + this.auth.token, {name: data.customItemName, vendorId: data.vendorId})
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           this.userItemsList[data.vendorInd]['items'].push(new Item(data.customItemName, 'cus', result, 'Case', 0));// add item to userItemsList
-          console.log(this.userItemsList[data.vendorInd]['items'])
+          //console.log(this.userItemsList[data.vendorInd]['items'])
         },
         error=>{
-          console.log(error)
+          //console.log(error)
           this.modal.text = "Couldn't add new item";
           this.modal.errDisplay = "block";
         }
@@ -117,8 +117,8 @@ export class ItemListComponent implements OnInit {
 
 // open note modal
 noteModal(data){
-  console.log(this.userItemsList)
-  console.log(data)
+  //console.log(this.userItemsList)
+  //console.log(data)
   this.modal.noteDisplay = 'block';
   this.note.name = this.userItemsList[data.vendorInd]['items'][data.itemInd]['name'];
   this.note.note = this.userItemsList[data.vendorInd]['items'][data.itemInd]['note'];
@@ -138,11 +138,11 @@ noteModal(data){
           this.http.put(this.url.itemsnote + '/' + itemId +'?token=' + this.auth.token, {note: this.note.note})
             .subscribe(
               result=>{
-                console.log(result)
+                //console.log(result)
                 this.userItemsList[this.note.vendorInd]['items'][this.note.itemInd]['note'] = this.note.note;
               },
               error=>{
-                console.log(error)
+                //console.log(error)
                 this.modal.text = "Couldn't update item note";
                 this.modal.errDisplay = "block";
               }
@@ -152,11 +152,11 @@ noteModal(data){
           this.http.post(this.url.itemsnote + '/' + itemId +'?token=' + this.auth.token, {note: this.note.note})
           .subscribe(
             result=>{
-              console.log(result)
+              //console.log(result)
               this.userItemsList[this.note.vendorInd]['items'][this.note.itemInd]['note'] = this.note.note;
             },
             error=>{
-              console.log(error)
+              //console.log(error)
               this.modal.text = "Couldn't add new note for item";
               this.modal.errDisplay = "block";
             }
@@ -166,11 +166,11 @@ noteModal(data){
         this.http.delete(this.url.itemsnote + '/' + itemId +'?token=' + this.auth.token)
         .subscribe(
           result=>{
-            console.log(result)
+            //console.log(result)
             this.userItemsList[this.note.vendorInd]['items'][this.note.itemInd]['note'] = this.note.note;
           },
           error=>{
-            console.log(error)
+            //console.log(error)
             this.modal.text = "Couldn't remove note";
             this.modal.errDisplay = "block";
           }

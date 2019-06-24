@@ -147,17 +147,18 @@ export class SignupFormComponent implements OnInit {
   onSignup() {
     //console.log("submitted");
     //console.log(this.signupForm.value);
+    const oldEmail = localStorage.getItem('evendorUser');
     let userName = this.signupForm.value.name;
     let email = this.signupForm.value.email;
     let password = this.signupForm.value.password;
-    //console.log(email)
+    //console.log(oldEmail)
     this.spinner = 'block';
     if(this.editCredentials){
       let oldpassword = this.signupForm.value.oldpassword;
       
       this.http.put(
         this.url.signup + '?token=' + this.auth.token, 
-        {name: userName, email: email, password: password, oldpassword: oldpassword},
+        {name: userName, email: email, password: password, oldpassword: oldpassword, oldEmail: oldEmail},
         {headers: new HttpHeaders({'X-Requested-With': 'XMLHttpRequest'})}
       )
       .subscribe(

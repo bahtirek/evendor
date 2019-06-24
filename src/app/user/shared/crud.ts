@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/* import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Response, Headers } from '@angular/http';
 import { HttpParams } from '@angular/common/http';
 
@@ -52,4 +52,4 @@ export class CRUD{
         
     }
 
-}
+} */

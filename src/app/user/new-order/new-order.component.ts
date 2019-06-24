@@ -1,3 +1,5 @@
+import { Item } from './../shared/item';
+
 import { modal } from './../shared/modal';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -57,7 +59,7 @@ export class NewOrderComponent implements OnInit {
                   .subscribe(
                     result => { // itemList subscribe
                       this.itemList = result;
-                      console.log(this.itemList)
+                      //console.log(this.itemList)
                       this.arrange(this.by);
                     },
                     error => {
@@ -142,11 +144,22 @@ export class NewOrderComponent implements OnInit {
   }
 
   changeVendor(data) {
+    console.log(this.itemListBy)
     let vendorId = data.vendorId;
     let vendorName = data.vendorName;
     let itemIndex = data.itemIndex;
     let itemId = data.itemId;
-    if (this.by !== 'byOrder') {
+    
+    if (this.by === 'byVendor') {
+      const index = this.itemListBy.findIndex((vendor) => {
+        return vendor.id == vendorId
+      })
+      const item = this.itemListBy[data.byIndex].items[itemIndex];
+      item.vendorId = vendorId;
+      item.vendorName = vendorName;
+      this.itemListBy[index].items.push(item);
+      this.itemListBy[data.byIndex].items.splice(itemIndex, 1);
+    } else {
       let i = 0;
       for (let item of this.itemList) {
         if (item.id == itemId) {
@@ -155,13 +168,17 @@ export class NewOrderComponent implements OnInit {
         }
         i++;
       }
+      this.itemList[itemIndex]['vendorId'] = vendorId;
+      this.itemList[itemIndex]['vendorName'] = vendorName;
     }
-    this.itemList[itemIndex]['vendorId'] = vendorId;
-    this.itemList[itemIndex]['vendorName'] = vendorName;
-    if (this.by !== 'byOrder') {
+    
+    
+    /* if (this.by !== 'byOrder') {
       this.arrange(this.by);
-    }
+    } */
   }
+
+
 
 
   review() {
@@ -177,7 +194,7 @@ export class NewOrderComponent implements OnInit {
   }
 
   
-
+  
 
 
 
@@ -443,9 +460,17 @@ submitSuspendedOrder(suspendedOrder) {
 sortBy(sort){
   //console.log(this.by)
   //console.log(this.itemList)
+  const item ='ch'
   if(sort == 'az'){
     this.itemList.sort(function(a,b){
-      return a.name.localeCompare(b.name);
+      const index = a.name.toLowerCase().indexOf(item)
+      if (index === 0 && a.name.charAt(index - 1) === '') {
+        return -1;
+      } else {
+        return 1;
+      }
+      
+      // return a.name.localeCompare(b.name);
     })
   }else if(sort == 'least'){
     this.itemList.sort(function(a, b) { 

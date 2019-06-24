@@ -1,12 +1,13 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { tokenNotExpired } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 
 @Injectable()
 export class AuthService {
 
+  helper = new JwtHelperService();
   public token;
 
   constructor( private router: Router) { }
@@ -29,8 +30,7 @@ export class AuthService {
 
   isLoggedIn(){
     this.token = localStorage.getItem('evendorToken');
-  
-    return tokenNotExpired();
+    if (!this.helper.isTokenExpired(this.token)) return true;
   }
 
   userEmail(){

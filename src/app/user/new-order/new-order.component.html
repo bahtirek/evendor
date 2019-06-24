@@ -23,7 +23,7 @@
             <h5 class="link">All items</h5>
           </div>
           <div class="card-block">
-            <order-table [itemList]="itemList" [vendors]="vendors" [by]="by" [order]="order" [isReview]="isReview" 
+            <order-table [itemList]="itemList" [vendors]="vendors" [order]="order" [isReview]="isReview" 
               (changeVendor)="changeVendor($event)" (checkCompare)="checkCompareEmitFromTable()" (checkQuantity)="checkQuantityEmitFromTable()"></order-table>
           </div>
         </div>
@@ -40,7 +40,7 @@
             </a>
             <div id="{{'i'+itemlist.id+'i'}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
               <div class="card-block">
-                <order-table [itemList]="itemlist.items" [vendors]="vendors" [by]="by" [order]="order" [isReview]="isReview"
+                <order-table [itemList]="itemlist.items" [vendorId]="itemlist.id" [vendors]="vendors" [byIndex]="byInd" [order]="order" [isReview]="isReview"
                   (changeVendor)="changeVendor($event)" (checkCompare)="checkCompareEmitFromTable()" (checkQuantity)="checkQuantityEmitFromTable()">
                 </order-table>
                   <div *ngIf="by=='byVendor'" class="form-group order-buttons">

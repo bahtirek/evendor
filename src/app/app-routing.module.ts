@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './services/auth-guard.service';
 const routes: Routes = [
   {
     path: '', 
@@ -17,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: "user",
-    loadChildren: './user/user.module#UserModule'
+    canLoad: [AuthGuard],
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
   },
   {
     path: "signup",

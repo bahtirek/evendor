@@ -13,22 +13,20 @@ export class AddRecipientComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
   
   public recipient: Recipient;
   public vendors: Vendor[];
   public flag;
   public mask: any[] = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  public displayVendor = false;
-  public displayRecipient = false;
-  public vendorRepresentIndex;
 
 
   
   @Output()
   save: EventEmitter<object> = new EventEmitter();
   saveRecipient(){
-    if(this.displayRecipient == true){
+    
       let vendors = [];
       for (var i = 0; i < this.vendors.length; i++) {
         if(this.flag[i]==true){
@@ -36,24 +34,18 @@ export class AddRecipientComponent implements OnInit {
         }
       }
       this.recipient.vendors = vendors;
-    }else{
-      let vendors = [];
-      if(this.vendorRepresentIndex != undefined){
-         vendors.push(new Vendor(this.vendors[this.vendorRepresentIndex ]['name'], this.vendors[this.vendorRepresentIndex ]['id']));
-         this.recipient.salesPerson = true;
-         this.recipient.vendors = vendors;
-        }
-    }
-    
+
     this.save.emit(this.recipient);
     this.recipient = new Recipient("","","",[]);
   }
+
+
+
   
 
   @Output()
   cancel: EventEmitter<null> = new EventEmitter();
   cancelEdit(){
-    this.vendorRepresentIndex = undefined;
     this.cancel.emit();
   }
 
@@ -62,22 +54,7 @@ export class AddRecipientComponent implements OnInit {
      let stringRegex = /^(?!\s*$).+/i;
      this.error = stringRegex.test(this.recipient.name);
    }
-  
-isVendor(e){
-  if(e == false){//represents recipient
-    this.displayVendor = false;
-    this.displayRecipient = true;
-    this.vendorRepresentIndex = undefined;
-  }else{//represents vendor
-    this.displayVendor = true;
-    this.displayRecipient = false;
 
-  }
-}
-   
-  vendorRepresent(vendorIndex){
-    this.vendorRepresentIndex = vendorIndex;
-  }
     
   }
 

@@ -1,20 +1,22 @@
+<div class="form-group row">
+  
+  <div class="col-sm-6">
+    <input class="form-control  form-control-sm search" type="text" name="searchItem" size="35" (keyup)="search(searchItem.value)" placeholder="Search"  #searchItem>
+  </div>
+</div>
 
 <table class="table table-hover table-sm">
     <tbody>
-      <tr *ngFor="let item of itemList; let itemInd=index">
+      <tr *ngFor="let item of itemList; trackBy:trackById ;let itemInd=index">
         <td *ngIf="item.quantity > 0 || !isReview || item.compare" [style.background-color]="item.compare ? '#fff8f0': ''">
           <div class="row">
             <div class="col-sm-5">
               <p>
-                  
-                 
                 <span class="badge badge-pill"
-                  
                   [class.badge-success]="item.lastOrder < 15"
                   [class.badge-warning]="item.lastOrder > 14"
                   [class.badge-danger]="item.lastOrder>30"
-                  title="Ordered {{ item.lastOrder }} days ago"
-                  >
+                  title="Ordered {{ item.lastOrder }} days ago">
                   {{item.lastOrder}}
                 </span>
                 
@@ -33,9 +35,6 @@
               </select>
               <div class="input-group-addon" (click)="increase(itemInd)">+</div>
                 </div>
-               <!--  <div class="input-group">
-                  <input type="number" name="quantity" class="form-control form-control-sm"  [(ngModel)]="item.quantity" (change)="updateOrder(item.id, item.pack, item.vendorId, item.quantity, item.name)" min="0" value="0" ngModel>
-                </div> -->
                 </div>
                 <div class="col-xs-3">
                   <select class="form-control form-control-sm ml" name="item.pack" [(ngModel)]="item.pack"  (change)="updateOrder(item.id, item.pack, item.vendorId, item.quantity, item.name)" ngModel>
@@ -48,15 +47,14 @@
                     <option *ngFor="let vendOpt of vendors; let optInd=index" value="{{vendOpt.id}}">{{vendOpt.name}}</option>
                   </select>
                 </div>
-                <div class="col-xs-3 h-menu" >
+                <!-- <div class="col-xs-3 h-menu" >
                   <div class="form-check" *ngIf="!onUpdate">
                     <label class="form-check-label text-muted">
                         <input class="form-check-input ml" name="comp" type="checkbox" value="" [(ngModel)]="item.compare" (change)="emitCheckCompare()" ngModel>
                         Compare
-                        <!-- <div class="checkbox"></div> -->
                       </label>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

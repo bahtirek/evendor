@@ -1,3 +1,4 @@
+import { Item } from './../../shared/item';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 
@@ -9,19 +10,21 @@ import { PrintService } from '../../../services/print.service';
   selector: 'order-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
-  inputs: ['itemList', 'vendors', 'by', 'order', 'isReview', 'onUpdate', 'vendorIndex']
+  inputs: ['itemList', 'vendors', 'order', 'isReview', 'withOrderUpdate', 'vendorIndex', 'byIndex', 'vendorId']
 })
 export class TableComponent implements OnInit {
 
   public itemList;
   public packList = packList;
   public vendors;
-  public by;
   public order: Order[];
   public isReview = false;
-  public onUpdate;
+  public withOrderUpdate;
   public vendorIndex;
   public lastOrder = 0;
+  public byIndex;
+  public vendorId;
+
 
   constructor(public printService: PrintService) { }
 
@@ -42,35 +45,45 @@ export class TableComponent implements OnInit {
     this.checkCompare.emit();
   }
 
+  search(item: string){
+    item = item.toLowerCase();
+    this.itemList.sort(function(a){
+      const index = a.name.toLowerCase().indexOf(item);
+      if (index === 0 || (index !== -1 && a.name.charAt(index - 1) === ' ')) {
+        return -1;
+      } else {
+        return 1;
+      }
+    })
+  }
+
 
   change(vendorId, itemId, itemIndex, pack, quantity, itemName){
-    let vendorName: string;
-    let vendorIndex;
-    let data;
-    ////console.log(vendorId, itemId, itemIndex, pack, quantity)
-    for(let v = 0; v < this.vendors.length; v++){//getting vendorName
-      if(this.vendors[v].id == vendorId){
-        vendorName = this.vendors[v].name;
-        vendorIndex = v;
+    if (vendorId != this.vendorId) {
+      let vendorName: string;
+      let vendorIndex;
+      let data;
+      for(let v = 0; v < this.vendors.length; v++){//getting vendorName
+        if(this.vendors[v].id == vendorId){
+          vendorName = this.vendors[v].name;
+          vendorIndex = v;
+        }
+      }
+
+      data = {vendorId: vendorId, vendorName: vendorName, itemId: itemId, itemIndex: itemIndex, vendorIndex: vendorIndex, prevVendorIndex: this.vendorIndex, byIndex: this.byIndex}
+      
+      if(!this.withOrderUpdate){
+        this.changeVendor.emit(data);
+        this.updateOrder(itemId, pack, vendorId, quantity);
+      }else{
+        if(quantity != 0){
+          this.updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex);
+          ////console.log(vendorIndex)
+        }
+        this.changeVendor.emit(data);
+        
       }
     }
-
-    data = {vendorId: vendorId, vendorName: vendorName, itemId: itemId, itemIndex: itemIndex, vendorIndex: vendorIndex, prevVendorIndex: this.vendorIndex}
-    
-    if(!this.onUpdate){
-      this.changeVendor.emit(data);
-      this.updateOrder(itemId, pack, vendorId, quantity);
-    }else{
-      if(quantity != 0){
-        this.updateHistoryItem(itemId, pack, vendorId, quantity, itemName, vendorIndex);
-        ////console.log(vendorIndex)
-      }
-      
-
-      this.changeVendor.emit(data);
-      
-    }
-    
   }
 
  
@@ -93,7 +106,7 @@ export class TableComponent implements OnInit {
 
 
 updateOrder(itemId, pack, vendorId, quantity, itemName?){ //updateOrder needed  only to keep order in storage 
-  if(!this.onUpdate){ //updating new order
+  if(!this.withOrderUpdate){ //updating new order
     
     ////console.log(itemId, pack, vendorId, quantity)
     let i = 0;
@@ -178,6 +191,10 @@ saveChangesInLocalStorage(){
     this.printService.isPrinting = true;
     this.printService.itemsList = this.itemList;
     this.printService.printDocument();
+  }
+
+  trackById(index: number, item: Item) {
+    return item.id
   }
 
 

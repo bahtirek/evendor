@@ -51,7 +51,7 @@
               <div id="{{'i'+vendor.id+'i'}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-block">
                   <order-table [itemList]="vendor.items" [order]="order" [isReview]="isReview" [vendors]="vendors"
-                    [onUpdate] = "true"
+                    [withOrderUpdate] = "true"
                     [vendorIndex] = "vendorInd"
                     (changeVendor)="changeVendor($event)">
                   </order-table>

@@ -95,7 +95,7 @@ export class RecipientComponent implements OnInit {
   ///////////////////////// Save new recipient or Update exist
 
   saveRecipient(data){
-    console.log(data)
+    // console.log(data)
     if(data.id !== undefined || data.id > 0){//if id exist update recipient else create recipient
       this.http.put(this.url.recipient + '/' + data.id + '?token=' + this.token, data)
       .subscribe(

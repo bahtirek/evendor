@@ -48,34 +48,14 @@
      </div>
     </div>
   </div>
-  <div class="form-check form-check-inline">
-      <label class="form-check-label" >Does represent a Vendor/Supplier:</label>
-    </div>
-    
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="isVendor" id ="isVendor1"  [checked]="recipient.salesPerson" (change)="isVendor(true)" >
-            <label class="form-check-label" for="isVendor1">Yes</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="isVendor" id ="isVendor2"  [checked]="!recipient.salesPerson" (change)="isVendor(false)" >
-            <label class="form-check-label" for="isVendor2">No</label>
-          </div>
-       
-      
-          <div *ngIf="displayVendor">
-              <div class="form-check form-check-inline" *ngFor="let vendor of vendors; let vendorIndex=index">
-                  <input class="form-check-input" type="radio"  name="vendor" id ="{{'isVendor' + vendorIndex}}" (change)="vendorRepresent(vendorIndex)" >
-                  <label class="form-check-label" for="{{'isVendor' + vendorIndex}}">{{vendor.name}}</label>
-                </div>
-    
-          </div>
 
-    <div *ngIf="displayRecipient">
+
+    <div>
         <div>
             <label for="vendor">Choose vendor order:</label>
           </div>
           <div class="ml-3">
-          <div class="form-check form-check-inline" *ngFor="let vendor of vendors; let i=index">
+          <div class="form-check" *ngFor="let vendor of vendors; let i=index">
             <label class="form-check-label">
                   <input class="form-check-input" 
                   [name]="vendor.name" 

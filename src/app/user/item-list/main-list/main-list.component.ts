@@ -27,12 +27,12 @@ export class MainListComponent implements OnInit {
     this.http.get(this.url.items + '/' + familyId + '?token=' + this.token)
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           this.allItems[index]['items'] = result;
-          console.log(this.allItems)
+          //console.log(this.allItems)
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       );
 
@@ -43,7 +43,7 @@ export class MainListComponent implements OnInit {
   @Output()
   addToList: EventEmitter<object> = new EventEmitter();
   add(familyInd, itemInd, vendorInd, vendorId, itemId){
-    console.log(vendorId)
+    //console.log(vendorId)
     let data = {familyInd: familyInd, itemInd: itemInd, vendorInd: vendorInd, vendorId: vendorId, itemId: itemId};
     this.addToList.emit(data);
   }

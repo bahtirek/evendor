@@ -4,13 +4,8 @@ import { AuthService } from './services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { HashLocationStrategy, LocationStrategy} from '@angular/common';
 
-import { CookieService } from 'ngx-cookie-service';
-
-import { CRUD } from './user/shared/crud';
 import { AuthGuard} from './services/auth-guard.service';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +18,8 @@ import { PriceCheckComponent } from './price-check/price-check.component';
 import { SpinnerModule } from './spinner/spinner.module';
 import { SignupFormModule } from './signup-form/signup-form.nodule';
 import { PrintService } from './services/print.service';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { PhoneFormatDirectivesModule } from './directives/phoneFormatDirectives.module';
 
 @NgModule({
   declarations: [
@@ -35,15 +32,15 @@ import { PrintService } from './services/print.service';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
     TextMaskModule,
     SpinnerModule,
-    SignupFormModule
+    SignupFormModule,
+    PhoneFormatDirectivesModule
   ],
-  providers: [CRUD, CookieService, AuthGuard, AuthService, PrintService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [AuthGuard, AuthService, PrintService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

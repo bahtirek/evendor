@@ -28,18 +28,18 @@ export class NewListComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    console.log(this.family)
+    //console.log(this.family)
 
     this.http.get<any>(this.url.useritems + '?token=' + this.token)
       .subscribe(
         result=>{
-          console.log(result)
+          //console.log(result)
           this.userItemsList = result;
           this.getUserList();//call func witch will transmit list to item-list.component 
-          //console.log(this.userItemsList)
+          ////console.log(this.userItemsList)
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       );
    
@@ -48,10 +48,10 @@ export class NewListComponent implements OnInit {
         result=>{
           this.groups = result;
           this.groups.push(new Group('Ungrouped', 0))
-          console.log(this.groups)
+          //console.log(this.groups)
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         }
       )
 
@@ -143,7 +143,7 @@ export class NewListComponent implements OnInit {
   //Change package
 
   changePack(itemId, itemInd, vendorId, vendorInd, pack){
-    console.log(itemId, itemInd, vendorId, vendorInd, pack)
+    //console.log(itemId, itemInd, vendorId, vendorInd, pack)
     let data = {value: pack, update: 'pack'};
     this.http.put<any>(this.url.useritem + '/' + itemId + '?token=' + this.token, data)
     .subscribe(
@@ -166,7 +166,7 @@ export class NewListComponent implements OnInit {
   //Change group
 
   changeGroup(itemId, groupId, itemInd, vendorInd){
-    console.log(itemId, groupId, itemInd, vendorInd)
+    //console.log(itemId, groupId, itemInd, vendorInd)
 
     let data = {value: groupId, update: 'group'};
     this.http.put<any>(this.url.useritem + '/' + itemId + '?token=' + this.token, data)
@@ -199,7 +199,7 @@ export class NewListComponent implements OnInit {
           }
         },
         error=>{
-          console.log(error)
+          //console.log(error)
         },
         ()=>{}
       )

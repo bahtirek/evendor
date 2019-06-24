@@ -1,7 +1,7 @@
 
   <div class="row justify-content-center main">
     <div class="col-md-6 col-sm-8">
-      <div class="text-right add-btn">
+      <div class="text-right add-btn mt-5">
          <button type="button" class="btn btn-link" (click)="newRecipient()">Add recipient</button>
       </div>
       <div *ngIf="edit || add">
@@ -17,7 +17,7 @@
       </div>
       <hr>
       <h4>Recipients</h4>
-      <div>
+      <div class="mb-5">
           <div class="card" *ngFor="let recipient of recipients; let i=index" >
               <div class="card-block">
                 <h5 class="card-title">{{recipient.name}}</h5>

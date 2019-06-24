@@ -94,7 +94,6 @@ export class HomeComponent implements OnInit {
     )
     .subscribe(
       result=>{
-       // console.log(result)
         if(result.token){
           if(this.authService.setToken(result.token, email)){
             if(result.account == true){
